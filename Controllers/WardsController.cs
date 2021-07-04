@@ -7,7 +7,6 @@ using System.Web.Http;
 
 namespace ChicksApp.Controllers
 {
-    //[System.Web.Http.RoutePrefix("api/wards")]
     public class WardsController : ApiController
     {
         private readonly DataContext _context;
