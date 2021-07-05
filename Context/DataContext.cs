@@ -1,4 +1,5 @@
 ﻿using ChicksApp.Domain;
+using ChicksAppNew.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,7 @@ namespace ChicksApp.Context
         public DbSet<GeneralStock> GeneralStocks { get; set; }
         public DbSet<StockInsertionOperation> StockInsertionOperations { get; set; }
         public DbSet<WardInsertionOperation> WardInsertionOperations { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<GeneralExpenses> GeneralExpenses { get; set; }
     }
 }

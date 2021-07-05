@@ -1,10 +1,17 @@
-import axios from "axios"
-import { IKeyValuePairsVM } from "../VM/KeyValuePairs"
+import axios from "axios";
+import { IKeyValuePairsVM } from "../VM/KeyValuePairs";
 import { getBaseUrl } from "./GetBaseURL";
 
 export const WardsApi = {
- getWardsList  : async () : Promise<IKeyValuePairsVM[]> => {
-    const req = await axios.get( getBaseUrl()+"/Wards/GetWards");
-    return req.data
-    }
-}
+  Login: async (userName: string, password: string): Promise<boolean> => {
+    const req = await axios.get(getBaseUrl() + "/Wards/Login", {
+      params: { userName: userName, password: password },
+    });
+    return req.data;
+  },
+
+  getWardsList: async (): Promise<IKeyValuePairsVM[]> => {
+    const req = await axios.get(getBaseUrl() + "/Wards/GetWards");
+    return req.data;
+  },
+};

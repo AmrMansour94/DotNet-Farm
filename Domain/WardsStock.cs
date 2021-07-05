@@ -16,6 +16,7 @@ namespace ChicksApp.Domain
         public int CurrentNumOfChicks { get; set; }
         public decimal ConsumedFoodQuantity { get; set; }
         public decimal ConsumedWoodDust { get; set; }
+        public int AgeInDays { get; set; }
 
         public virtual Ward Ward { get; set; }
 
