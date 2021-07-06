@@ -10,8 +10,22 @@ import img from "../../Assets/img/1.jpg";
 import Swal from "sweetalert2";
 import { WardsApi } from "../../Services/WardsServices";
 import  { Redirect } from 'react-router-dom'
+import { storeState } from "../..";
+import { LoginDispatcher, LoginInitialState } from "../../LoginReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
+  const { ID } = useSelector<
+  storeState,
+  LoginInitialState
+>((state: storeState) => {
+  return {
+    ID : state.Login.ID
+  };
+});
+const dispatch = useDispatch();
+const rootDispatcher = new LoginDispatcher(dispatch);
+
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -19,9 +33,10 @@ const Login = () => {
 
   const onClickHandler = async (e: any) => {
     e.preventDefault();
-    const Auth = await WardsApi.Login(userName , password)
-    if (Auth)
+    const userID = await WardsApi.Login(userName , password)
+    if (userID)
     {
+      rootDispatcher.setID(userID)
         window.location.href = '/'
     }
     else{

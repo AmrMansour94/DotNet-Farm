@@ -24,12 +24,12 @@ namespace ChicksApp.Controllers
         }
 
         [HttpGet]
-        public bool Login(string userName , string password)
+        public int Login(string userName , string password)
         {
             var user = _context.Users.Where(x=> x.UserName == userName && x.Password == password).FirstOrDefault();
             if (user != null)
-                return true;
-            else return false;
+                return user.ID;
+            else return 0;
         }
     }
 }

@@ -3,14 +3,32 @@ import { WardsApi } from "../../Services/WardsServices";
 import { IKeyValuePairsVM } from "../../VM/KeyValuePairs";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
+import { useSelector, useDispatch } from "react-redux";
+import { storeState } from "../..";
+import { LoginInitialState, LoginDispatcher } from "../../LoginReducer";
 
 const WardsInsertOperations = () => {
+  const { ID } = useSelector<
+  storeState,
+  LoginInitialState
+>((state: storeState) => {
+  return {
+    ID : state.Login.ID
+  };
+});
+const dispatch = useDispatch();
+const rootDispatcher = new LoginDispatcher(dispatch);
+
   const [wardsList, setWardsList] = useState<IKeyValuePairsVM[]>([]);
   const [selectedWard, setSelectedWard] = useState<number>();
   const [isHidden, setIsHidden] = useState<boolean>(true);
   const [addedChicksNumber, setAddedChicksNumber] = useState<number>();
 
   const onLoad = async () => {
+    if(!ID)
+    {
+      window.location.href = '/Login'
+    }
     const data = await WardsApi.getWardsList();
     setWardsList(data);
   };

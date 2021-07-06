@@ -3,7 +3,7 @@ import { IKeyValuePairsVM } from "../VM/KeyValuePairs";
 import { getBaseUrl } from "./GetBaseURL";
 
 export const WardsApi = {
-  Login: async (userName: string, password: string): Promise<boolean> => {
+  Login: async (userName: string, password: string): Promise<number> => {
     const req = await axios.get(getBaseUrl() + "/Wards/Login", {
       params: { userName: userName, password: password },
     });
