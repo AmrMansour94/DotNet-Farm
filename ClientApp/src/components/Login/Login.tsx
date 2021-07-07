@@ -13,6 +13,7 @@ import  { Redirect } from 'react-router-dom'
 import { storeState } from "../..";
 import { LoginDispatcher, LoginInitialState } from "../../LoginReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const { ID } = useSelector<
@@ -28,8 +29,16 @@ const rootDispatcher = new LoginDispatcher(dispatch);
 
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const history = useHistory();
+  
 
   useEffect(() => {}, [userName, password]);
+  useEffect(() => {
+    debugger;
+    if (ID) {
+      history.push("/");
+    }
+  }, [ID]);
 
   const onClickHandler = async (e: any) => {
     e.preventDefault();
@@ -37,7 +46,6 @@ const rootDispatcher = new LoginDispatcher(dispatch);
     if (userID)
     {
       rootDispatcher.setID(userID)
-        window.location.href = '/'
     }
     else{
          Swal.fire({

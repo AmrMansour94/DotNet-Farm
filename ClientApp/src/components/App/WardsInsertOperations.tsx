@@ -37,6 +37,9 @@ const rootDispatcher = new LoginDispatcher(dispatch);
     onLoad();
   }, []);
   useEffect(() => {}, [wardsList, selectedWard, isHidden]);
+  const onSaveClick =() =>{
+    console.log(ID)
+  }
 
   return (
     <div>
@@ -56,7 +59,8 @@ const rootDispatcher = new LoginDispatcher(dispatch);
               <div className="col-md-1">
                 <button
                   className="btn btn-primary btn-fab btn-fab-mini btn-round"
-                  onClick={() => setIsHidden(false)}
+                  onClick={() => {setIsHidden(false)
+                    console.log(ID)}}
                 >
                   <i className="material-icons">
                     <SearchRoundedIcon />
@@ -217,6 +221,7 @@ const rootDispatcher = new LoginDispatcher(dispatch);
               <button
                 className="btn btn-primary btn-round"
                 style={{ alignSelf: "center", width: "100%" }}
+                onClick={onSaveClick}
               >
                 <FavoriteBorderRoundedIcon />{" "}
                 <label
