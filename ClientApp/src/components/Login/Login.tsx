@@ -14,14 +14,15 @@ import { storeState } from "../..";
 import { LoginDispatcher, LoginInitialState } from "../../LoginReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
+import LoginNavbar from "../NavBar/LoginNavbar";
 
 const Login = () => {
-  const { ID } = useSelector<
+  const { User } = useSelector<
   storeState,
   LoginInitialState
 >((state: storeState) => {
   return {
-    ID : state.Login.ID
+    User : state.Login.User
   };
 });
 const dispatch = useDispatch();
@@ -35,19 +36,20 @@ const rootDispatcher = new LoginDispatcher(dispatch);
   useEffect(() => {}, [userName, password]);
   useEffect(() => {
     debugger;
-    if (ID) {
+    if (User) {
       history.push("/");
     }
-  }, [ID]);
+  }, [User]);
 
   const onClickHandler = async (e: any) => {
     e.preventDefault();
-    const userID = await WardsApi.Login(userName , password)
-    if (userID)
+    const user = await WardsApi.Login(userName , password)
+    if (user)
     {
-      rootDispatcher.setID(userID)
+      rootDispatcher.setUser(user)
     }
     else{
+      rootDispatcher.setUser(null)
          Swal.fire({
       icon: "error",
       title: "اسم المستخدم او كلمة المرور خطأ",
@@ -60,14 +62,7 @@ const rootDispatcher = new LoginDispatcher(dispatch);
   return (
     <div>
       {/* <NavBar2 /> */}
-      <nav className="navbar navbar-absolute bg-primary">
-        <button
-          className="btn btn-primary btn-round"
-          style={{ fontSize: "20px" }}
-        >
-          DotNet-Farm App
-        </button>
-      </nav>
+      <LoginNavbar />
       <div
         className="page-header header-filter"
         style={{

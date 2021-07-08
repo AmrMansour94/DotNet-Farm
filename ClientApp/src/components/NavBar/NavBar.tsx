@@ -84,7 +84,7 @@ export default function TabBar() {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{display:"block"}}>
       <AppBar position="static">
         <Tabs
           value={value}

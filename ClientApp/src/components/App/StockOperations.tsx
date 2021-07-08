@@ -7,12 +7,12 @@ import { LoginInitialState, LoginDispatcher } from "../../LoginReducer";
 
 const StockOperations = () => {
 
-  const { ID } = useSelector<
+  const { User } = useSelector<
   storeState,
   LoginInitialState
 >((state: storeState) => {
   return {
-    ID : state.Login.ID
+    User : state.Login.User
   };
 });
 const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const rootDispatcher = new LoginDispatcher(dispatch);
   const [addedChicksNumber, setAddedChicksNumber] = useState<number>();
 
   const onLoad = async () => {
-    if(!ID)
+    if(!User)
     {
       window.location.href = '/Login'
     }
@@ -33,7 +33,7 @@ const rootDispatcher = new LoginDispatcher(dispatch);
   }, []);
   useEffect(() => {}, [addedChicksNumber]);
 
-  if(ID){
+  if(User){
     return (
       <div>
        <div className="card">

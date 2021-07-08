@@ -134,9 +134,9 @@ const MainComponent = () => {
             </tr>
             {wardsList.map((ward: IKeyValuePairsVM) => {
               return (
-                <tr key={ward.id}>
-                  <th>{ward.id}</th>
-                  <th>{ward.name}</th>
+                <tr key={ward.ID}>
+                  <th>{ward.ID}</th>
+                  <th>{ward.Name}</th>
                 </tr>
               );
             })}
@@ -145,7 +145,7 @@ const MainComponent = () => {
         <div className="col-md-4">
           <ul>
             {wardsList.map((ward: IKeyValuePairsVM) => {
-              return <li key={ward.id}>{ward.name}</li>;
+              return <li key={ward.ID}>{ward.Name}</li>;
             })}
           </ul>
         </div>

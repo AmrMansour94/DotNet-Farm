@@ -5,12 +5,13 @@ import TabBar from "./components/NavBar/NavBar";
 import { useSelector, useDispatch } from "react-redux";
 import { storeState } from ".";
 import { LoginInitialState, LoginDispatcher } from "./LoginReducer";
+import LoginNavbar from "./components/NavBar/LoginNavbar";
 
 const App = () => {
-  const { ID } = useSelector<storeState, LoginInitialState>(
+  const { User } = useSelector<storeState, LoginInitialState>(
     (state: storeState) => {
       return {
-        ID: state.Login.ID,
+        User: state.Login.User,
       };
     }
   );
@@ -18,20 +19,24 @@ const App = () => {
   const rootDispatcher = new LoginDispatcher(dispatch);
 
   useEffect(() => {
-    debugger
-    if (!ID) {
+    debugger;
+    if (!User) {
       window.location.href = "/Login";
     }
   }, []);
-   if (ID) {
+  if (User) {
     return (
       <div>
-        <Layout>
+        <LoginNavbar />
+        <div style={{display:"block"}}>
+           <Layout>
           <TabBar />
         </Layout>
+        </div>
+       
       </div>
     );
-   } else return <></>;
+  } else return <></>;
 };
 
 export default App;

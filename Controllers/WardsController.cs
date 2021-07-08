@@ -1,6 +1,6 @@
 ﻿using ChicksApp.Context;
-using ChicksApp.Domain;
 using ChicksApp.VM;
+using ChicksAppNew.VM;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -24,12 +24,11 @@ namespace ChicksApp.Controllers
         }
 
         [HttpGet]
-        public int Login(string userName , string password)
+        public UserVM Login(string userName , string password)
         {
-            var user = _context.Users.Where(x=> x.UserName == userName && x.Password == password).FirstOrDefault();
-            if (user != null)
-                return user.ID;
-            else return 0;
+            var user = _context.Users.Where(x=> x.UserName == userName && x.Password == password).Select(x=> new UserVM {ID = x.ID , UserName = x.UserName }).FirstOrDefault();
+                return user;
+
         }
     }
 }

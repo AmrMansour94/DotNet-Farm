@@ -8,16 +8,15 @@ import { storeState } from "../..";
 import { LoginInitialState, LoginDispatcher } from "../../LoginReducer";
 
 const WardsInsertOperations = () => {
-  const { ID } = useSelector<
+  const { User } = useSelector<
   storeState,
   LoginInitialState
 >((state: storeState) => {
   return {
-    ID : state.Login.ID
+    User : state.Login.User
   };
 });
-const dispatch = useDispatch();
-const rootDispatcher = new LoginDispatcher(dispatch);
+
 
   const [wardsList, setWardsList] = useState<IKeyValuePairsVM[]>([]);
   const [selectedWard, setSelectedWard] = useState<number>();
@@ -25,7 +24,7 @@ const rootDispatcher = new LoginDispatcher(dispatch);
   const [addedChicksNumber, setAddedChicksNumber] = useState<number>();
 
   const onLoad = async () => {
-    if(!ID)
+    if(!User)
     {
       window.location.href = '/Login'
     }
@@ -38,7 +37,7 @@ const rootDispatcher = new LoginDispatcher(dispatch);
   }, []);
   useEffect(() => {}, [wardsList, selectedWard, isHidden]);
   const onSaveClick =() =>{
-    console.log(ID)
+    
   }
 
   return (
@@ -60,7 +59,7 @@ const rootDispatcher = new LoginDispatcher(dispatch);
                 <button
                   className="btn btn-primary btn-fab btn-fab-mini btn-round"
                   onClick={() => {setIsHidden(false)
-                    console.log(ID)}}
+                    console.log(User)}}
                 >
                   <i className="material-icons">
                     <SearchRoundedIcon />
@@ -79,7 +78,7 @@ const rootDispatcher = new LoginDispatcher(dispatch);
                   }}
                 >
                   {wardsList.map((ward: IKeyValuePairsVM) => {
-                    return <option key={ward.id}>{ward.name}</option>;
+                    return <option key={ward.ID}>{ward.Name}</option>;
                   })}
                 </select>
               </div>

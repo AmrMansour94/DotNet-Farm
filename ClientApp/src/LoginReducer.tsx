@@ -1,7 +1,8 @@
 import { Action, Reducer, Dispatch } from "redux";
+import { UserVM } from "./VM/UserVM";
 
 export interface LoginInitialState {
-  ID: number;
+  User: UserVM | null;
 }
 
 export interface DispatchAction extends Action<actionTypes> {
@@ -9,25 +10,25 @@ export interface DispatchAction extends Action<actionTypes> {
 }
 
 export const initialState = {
-  ID: 0,
+  User: null,
 };
-export interface SET_IDAction {
-  type: actionTypes.SET_ID;
-  ID: number;
+export interface SET_USERAction {
+  type: actionTypes.SET_USER;
+  User: UserVM;
 }
 
 export enum actionTypes {
-  SET_ID,
+  SET_USER,
 }
 
 export const LoginReducer: Reducer<LoginInitialState, DispatchAction> = (
   state = initialState,
   action
 ) => {
-  if (action.type === actionTypes.SET_ID) {
+  if (action.type === actionTypes.SET_USER) {
     return {
       ...state,
-      ID: action.payload.ID ?? 0,
+      User: action.payload.User?? null,
     };
   }
   return state;
@@ -39,10 +40,10 @@ export class LoginDispatcher {
     this.dispatch = dispatch;
   }
 
-  setID = (ID: number) => {
+  setUser = (User: UserVM | null) => {
     this.dispatch({
-      type: actionTypes.SET_ID,
-      payload: { ID: ID },
+      type: actionTypes.SET_USER,
+      payload: { User: User },
     });
   };
 }
