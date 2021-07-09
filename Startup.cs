@@ -42,6 +42,9 @@ namespace ChicksAppNew
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            // Adjust Json Return Values To Use Same Format As ViewModels
+
             services.AddControllers()
             .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
         }

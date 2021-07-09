@@ -28,15 +28,15 @@ const LoginNavbar = () => {
         
           <button
             className="btn btn-primary btn-round"
-            style={{ fontSize: "20px" }}
+            style={{ fontSize: "21px" }}
           >
-            DotNet-Farm App
+            دواجن دوت كوم
           </button>
           { User? (<div className="row">
 
         <div className="col-md-6">
           <h4 className="card-title" style={{ color: "white" }}>
-            Welcome: {User.UserName}
+            User: {User.UserName}
           </h4>
         </div>
 

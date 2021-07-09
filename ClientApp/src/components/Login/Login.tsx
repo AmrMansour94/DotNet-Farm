@@ -15,6 +15,7 @@ import { LoginDispatcher, LoginInitialState } from "../../LoginReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import LoginNavbar from "../NavBar/LoginNavbar";
+import FullPageLoader from "../FullPageLoader/FullPageLoader";
 
 const Login = () => {
   const { User } = useSelector<

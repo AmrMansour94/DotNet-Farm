@@ -7,13 +7,14 @@ import TocOutlinedIcon from '@material-ui/icons/TocOutlined';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined';
 import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { IKeyValuePairsVM } from '../../VM/KeyValuePairs';
 import { WardsApi } from '../../Services/WardsServices';
 import MainComponent from '../App/MainComponent';
-import StockOperations from '../App/StockOperations';
-import WardsInsertOperations from '../App/WardsInsertOperations';
+import WardsContainer from '../App/Wards/WardsContainer';
+import StockMainContainer from '../App/Stock/StockMainContainer';
+import Expenses from '../App/Expenses/Expenses';
+import ReportsMainContainer from '../App/Reports/ReportsMainContainer';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -85,7 +86,7 @@ export default function TabBar() {
 
   return (
     <div className={classes.root} style={{display:"block"}}>
-      <AppBar position="static">
+      <AppBar position="relative" style={{backgroundColor : "#9c27b0"}}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -93,23 +94,23 @@ export default function TabBar() {
           scrollButtons="off"
           aria-label="scrollable prevent tabs example"
         >
-          <Tab icon={<HomeOutlinedIcon />} aria-label="phone" {...a11yProps(0)} label = "المخزن" style={{width : 300}} />
+          <Tab icon={<HomeOutlinedIcon />} aria-label="phone" {...a11yProps(0)} label = "تهيئة المخزن" style={{width : 300}} />
           <Tab icon={<TocOutlinedIcon />} aria-label="favorite" {...a11yProps(1)} label = "تهيئة العنابر" style={{width : 300}}  />
-          <Tab icon={<AttachMoneyOutlinedIcon />} aria-label="person" {...a11yProps(2)} label = "مدخلات اضافية" style={{width : 300}} />
+          <Tab icon={<AttachMoneyOutlinedIcon />} aria-label="person" {...a11yProps(2)} label = "مصروفات اضافية" style={{width : 300}} />
           <Tab icon={<AssessmentOutlinedIcon />} aria-label="help" {...a11yProps(3)} label = "التقارير" style={{width : 300}}/>
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0} >
-        <StockOperations />
+        <StockMainContainer />
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <WardsInsertOperations />
+      <WardsContainer />
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <MainComponent />
+      <Expenses />
       </TabPanel>
       <TabPanel value={value} index={3}>
-      <MainComponent />
+      <ReportsMainContainer />
       </TabPanel>
      
     </div>
