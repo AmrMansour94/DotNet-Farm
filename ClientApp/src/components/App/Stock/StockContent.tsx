@@ -18,8 +18,51 @@ const StockContent = () => {
           محتويات المخزن
         </span>
       </div>
-      <div className="row" style={{ margin: "20px" , direction : "rtl" }}>
-      <div className="col-md-1"></div>
+      <div className="row" style={{ margin: "20px", direction: "rtl" }}>
+        <div className="col-md-2">
+          <span
+            style={{
+              textShadow: "4px 4px 8px #f2cfff",
+              fontWeight: 900,
+              fontSize: "125%",
+            }}
+          >
+            عدد الكتاكيت الاجمالي:
+          </span>
+        </div>
+        <div className="col-md-1">
+          <span
+            style={{
+              textShadow: "4px 4px 8px #f2cfff",
+              fontWeight: 900,
+              fontSize: "125%",
+            }}
+          >
+            "0"
+          </span>
+        </div>
+        <div className="col-md-2">
+          <span
+            style={{
+              textShadow: "4px 4px 8px #f2cfff",
+              fontWeight: 900,
+              fontSize: "125%",
+            }}
+          >
+            عدد الكتاكيت المتاح:
+          </span>
+        </div>
+        <div className="col-md-1">
+          <span
+            style={{
+              textShadow: "4px 4px 8px #f2cfff",
+              fontWeight: 900,
+              fontSize: "125%",
+            }}
+          >
+            "0"
+          </span>
+        </div>
         <div className="col-md-2">
           <span
             style={{
@@ -55,29 +98,6 @@ const StockContent = () => {
           </span>
         </div>
 
-        <div className="col-md-1">
-          <span
-            style={{
-              textShadow: "4px 4px 8px #f2cfff",
-              fontWeight: 900,
-              fontSize: "125%",
-            }}
-          >
-            "0"
-          </span>
-        </div>
-
-        <div className="col-md-2">
-          <span
-            style={{
-              textShadow: "4px 4px 8px #f2cfff",
-              fontWeight: 900,
-              fontSize: "125%",
-            }}
-          >
-            عدد الكتاكيت المتاحة:
-          </span>
-        </div>
         <div className="col-md-1">
           <span
             style={{

@@ -9,31 +9,31 @@ import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import img from "../../Assets/img/1.jpg";
 import Swal from "sweetalert2";
 import { WardsApi } from "../../Services/WardsServices";
-import  { Redirect } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 import { storeState } from "../..";
 import { LoginDispatcher, LoginInitialState } from "../../LoginReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import LoginNavbar from "../NavBar/LoginNavbar";
 import FullPageLoader from "../FullPageLoader/FullPageLoader";
 
+
 const Login = () => {
-  const { User } = useSelector<
-  storeState,
-  LoginInitialState
->((state: storeState) => {
-  return {
-    User : state.Login.User
-  };
-});
-const dispatch = useDispatch();
-const rootDispatcher = new LoginDispatcher(dispatch);
+  const { User } = useSelector<storeState, LoginInitialState>(
+    (state: storeState) => {
+      return {
+        User: state.Login.User,
+      };
+    }
+  );
+  const dispatch = useDispatch();
+  const rootDispatcher = new LoginDispatcher(dispatch);
 
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const history = useHistory();
-  
 
+ 
   useEffect(() => {}, [userName, password]);
   useEffect(() => {
     debugger;
@@ -44,25 +44,21 @@ const rootDispatcher = new LoginDispatcher(dispatch);
 
   const onClickHandler = async (e: any) => {
     e.preventDefault();
-    const user = await WardsApi.Login(userName , password)
-    if (user)
-    {
-      rootDispatcher.setUser(user)
+    const user = await WardsApi.Login(userName, password);
+    if (user) {
+      rootDispatcher.setUser(user);
+    } else {
+      rootDispatcher.setUser(null);
+      Swal.fire({
+        icon: "error",
+        title: "اسم المستخدم او كلمة المرور خطأ",
+        showConfirmButton: false,
+        timer: 1300,
+      });
     }
-    else{
-      rootDispatcher.setUser(null)
-         Swal.fire({
-      icon: "error",
-      title: "اسم المستخدم او كلمة المرور خطأ",
-      showConfirmButton: false,
-      timer: 1300,
-    });
-    }
-   
   };
   return (
     <div>
-      {/* <NavBar2 /> */}
       <LoginNavbar />
       <div
         className="page-header header-filter"
@@ -97,7 +93,9 @@ const rootDispatcher = new LoginDispatcher(dispatch);
                     </a>
                   </div>
                 </div>
-                <p className="description text-center">Or Use Special Credintials</p>
+                <p className="description text-center">
+                  Or Use Special Credintials
+                </p>
                 <div className="card-body">
                   <div className="input-group">
                     <div className="input-group-prepend">
