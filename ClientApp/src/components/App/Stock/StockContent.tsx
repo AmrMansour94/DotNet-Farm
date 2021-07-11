@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { StockApi } from "../../../Services/StockServices";
 
 const StockContent = () => {
+
+  useEffect(() => {
+  onload();
+  }, [])
+
+  const onload =async ()=>{
+    const data = await StockApi.getStockContent()
+  }
+
   return (
     <>
       <div className="row justify-content-center" style={{ margin: "20px" }}>

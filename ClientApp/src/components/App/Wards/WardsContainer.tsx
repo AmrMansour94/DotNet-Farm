@@ -4,7 +4,6 @@ import { storeState } from "../../..";
 import { LoginInitialState } from "../../../LoginReducer";
 import { WardsApi } from "../../../Services/WardsServices";
 import { IKeyValuePairsVM } from "../../../VM/KeyValuePairs";
-import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 import WardContent from "./WardContent";
 import WardsInsertOperations from "./WardsInsertOperations";
@@ -22,7 +21,6 @@ const WardsContainer = () => {
   const [wardsList, setWardsList] = useState<IKeyValuePairsVM[]>([]);
   const [selectedWard, setSelectedWard] = useState<number>(0);
   const [isHidden, setIsHidden] = useState<boolean>(true);
-  const [addedChicksNumber, setAddedChicksNumber] = useState<number>();
 
   const onLoad = async () => {
     if (!User) {
@@ -102,32 +100,8 @@ const WardsContainer = () => {
         <div className="card-body" hidden={isHidden}>
           <div className="card">
             <StockContent />
+            <WardContent wardId={selectedWard} />
             <WardsInsertOperations />
-
-            <div className="row" style={{ margin: "20px" }}>
-              <div className="col-md-3"></div>
-
-              <div className="col-md-6">
-                <button
-                  className="btn btn-primary btn-round"
-                  style={{ alignSelf: "center", width: "100%" }}
-                  onClick={onSaveClick}
-                >
-                  <FavoriteBorderRoundedIcon />{" "}
-                  <label
-                    style={{
-                      color: "white",
-                      fontWeight: 900,
-                      fontSize: "125%",
-                    }}
-                  >
-                    اضافة الي العنبر
-                  </label>
-                </button>
-              </div>
-
-              <div className="col-md-3"></div>
-            </div>
           </div>
         </div>
       </div>

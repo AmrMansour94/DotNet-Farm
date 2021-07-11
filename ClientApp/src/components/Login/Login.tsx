@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import LoginNavbar from "../NavBar/LoginNavbar";
 import FullPageLoader from "../FullPageLoader/FullPageLoader";
+import { LoginApi } from "../../Services/LoginServices";
 
 
 const Login = () => {
@@ -44,7 +45,7 @@ const Login = () => {
 
   const onClickHandler = async (e: any) => {
     e.preventDefault();
-    const user = await WardsApi.Login(userName, password);
+    const user = await LoginApi.Login(userName, password);
     if (user) {
       rootDispatcher.setUser(user);
     } else {

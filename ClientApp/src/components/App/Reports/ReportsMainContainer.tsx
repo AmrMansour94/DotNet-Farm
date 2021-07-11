@@ -38,7 +38,7 @@ const ReportsMainContainer = () => {
                   fontSize: "125%",
                 }}
               >
-                :اختر العنبر
+                :اختر التقرير
               </span>
             </div>
             <div className="col-md-5">
@@ -64,7 +64,7 @@ const ReportsMainContainer = () => {
 
       <div className="card-body" hidden={isHidden}>
         <div className="card">
-          <WardsReport />
+          <WardsReport selectedReport={selectedReport}/>
         </div>
       </div>
     </div>

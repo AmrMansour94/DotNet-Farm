@@ -29,10 +29,9 @@ const FullPageLoader = () => {
             right: 0,
             bottom: 0,
             zIndex: 5,
-            opacity: 0.8
           }}
         ></img>
-         <img
+         {/* <img
           src={loaderImg2}
           alt="loading..."
           style={{
@@ -45,7 +44,7 @@ const FullPageLoader = () => {
             zIndex: 5,
             opacity: 0.8
           }}
-        ></img>
+        ></img> */}
       </div>
   );
 };

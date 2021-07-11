@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { WardsApi } from "../../../Services/WardsServices";
 import { IKeyValuePairsVM } from "../../../VM/KeyValuePairs";
-
 import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
 import { useSelector, useDispatch } from "react-redux";
 import { storeState } from "../../..";
@@ -17,23 +16,28 @@ const WardsInsertOperations = () => {
     }
   );
 
-  const [wardsList, setWardsList] = useState<IKeyValuePairsVM[]>([]);
-  const [selectedWard, setSelectedWard] = useState<number>(0);
-  const [isHidden, setIsHidden] = useState<boolean>(true);
-  const [addedChicksNumber, setAddedChicksNumber] = useState<number>();
+  const [addedChicksNumber, setAddedChicksNumber] = useState<number>(0);
+  const [addedFoodQuantity, setAddedFoodQuantity] = useState<number>(0);
+  const [addedWoodDustQuantity, setAddedWoodDustQuantity] = useState<number>(0);
+  const [deadChicksNumber, setDeadChicksNumber] = useState<number>(0);
+  const [avgBirdWeight, setAvgBirdWeight] = useState<number>(0);
 
   const onLoad = async () => {
     if (!User) {
       window.location.href = "/Login";
     }
-    const data = await WardsApi.getWardsList();
-    setWardsList(data);
   };
 
   useEffect(() => {
     onLoad();
   }, []);
-  useEffect(() => {}, [wardsList, selectedWard, isHidden]);
+  useEffect(() => {}, [
+    addedChicksNumber,
+    addedFoodQuantity,
+    addedWoodDustQuantity,
+    avgBirdWeight,
+    deadChicksNumber,
+  ]);
   const onSaveClick = () => {};
 
   return (
@@ -55,8 +59,8 @@ const WardsInsertOperations = () => {
           ادخال البيانات اليومية للعنبر
         </span>
       </div>
-      <div className="row" style={{ margin: "20px" , direction:"rtl" }}>
-      <div className="col-md-2">
+      <div className="row" style={{ margin: "20px", direction: "rtl" }}>
+        <div className="col-md-2">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
@@ -82,8 +86,8 @@ const WardsInsertOperations = () => {
             }}
           />
         </div>
-        
-      <div className="col-md-2">
+
+        <div className="col-md-2">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
@@ -100,20 +104,21 @@ const WardsInsertOperations = () => {
             min={0}
             className="form-control"
             placeholder="عدد النوافق..."
+            onChange={(e: any) => {
+              setDeadChicksNumber(Number(e.target.value));
+            }}
             style={{
               fontWeight: 900,
               fontSize: "125%",
             }}
           />
         </div>
-        
-       
       </div>
 
       {/* Line 2 */}
 
-      <div className="row" style={{ margin: "20px" , direction:"rtl" }}>
-      <div className="col-md-2">
+      <div className="row" style={{ margin: "20px", direction: "rtl" }}>
+        <div className="col-md-2">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
@@ -130,7 +135,7 @@ const WardsInsertOperations = () => {
             min={0}
             step=".001"
             onChange={(e: any) => {
-              setAddedChicksNumber(Number(e.target.value));
+              setAddedFoodQuantity(Number(e.target.value));
             }}
             className="form-control"
             placeholder="كمية الطعام..."
@@ -141,7 +146,7 @@ const WardsInsertOperations = () => {
           />
         </div>
 
-      <div className="col-md-2">
+        <div className="col-md-2">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
@@ -159,17 +164,19 @@ const WardsInsertOperations = () => {
             step=".001"
             className="form-control"
             placeholder="كمية النشارة..."
+            onChange={(e: any) => {
+              setAddedWoodDustQuantity(Number(e.target.value));
+            }}
             style={{
               fontWeight: 900,
               fontSize: "125%",
             }}
           />
         </div>
-
       </div>
 
-      <div className="row" style={{ margin: "20px" , direction:"rtl" }}>
-      <div className="col-md-2">
+      <div className="row" style={{ margin: "20px", direction: "rtl" }}>
+        <div className="col-md-2">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
@@ -188,14 +195,40 @@ const WardsInsertOperations = () => {
             step=".001"
             className="form-control"
             placeholder="متوسط وزن الطائر..."
+            onChange={(e: any) => {
+              setAvgBirdWeight(Number(e.target.value));
+            }}
             style={{
               fontWeight: 900,
               fontSize: "125%",
             }}
           />
         </div>
+      </div>
 
-       
+      <div className="row" style={{ margin: "20px" }}>
+        <div className="col-md-3"></div>
+
+        <div className="col-md-6">
+          <button
+            className="btn btn-primary btn-round"
+            style={{ alignSelf: "center", width: "100%" }}
+            onClick={onSaveClick}
+          >
+            <FavoriteBorderRoundedIcon />{" "}
+            <label
+              style={{
+                color: "white",
+                fontWeight: 900,
+                fontSize: "125%",
+              }}
+            >
+              اضافة الي العنبر
+            </label>
+          </button>
+        </div>
+
+        <div className="col-md-3"></div>
       </div>
     </>
   );

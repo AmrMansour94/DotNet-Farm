@@ -17,7 +17,12 @@ let pivotObj : PivotViewComponent | null
 const exportClick = () => {
   if (pivotObj) pivotObj.excelExport();
 };
-const WardsReport = () => {
+
+interface Iprops{
+  selectedReport:number
+}
+
+const WardsReport = (props:Iprops) => {
   return (
     <div>
       <div className="col-md-9">
