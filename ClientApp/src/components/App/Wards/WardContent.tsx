@@ -68,7 +68,7 @@ const WardContent = (props: Iprops) => {
               fontSize: "125%",
             }}
           >
-            :كمية الطعام
+            :كمية العلف
           </span>
         </div>
 

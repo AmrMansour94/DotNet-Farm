@@ -1,10 +1,9 @@
 export interface StockContentVM {
-TotalChicksNum : number,
-CurrentChicksNum : number,
-AvailableFoodQuantity: number,
-AvailableWoodDust : number
+totalChicksNum : number,
+currentChicksNum : number,
+availableFoodQuantity: number,
+availableWoodDust : number
 }
-
 export interface SaveNewQuantitiesVM{
       addedChicksNum : number
       addedFoodQuantity : number

@@ -29,19 +29,25 @@ const StockOperations = () => {
     if (!User) {
       window.location.href = "/Login";
     }
-    const data = await WardsApi.getWardsList();
   };
 
   useEffect(() => {
     onLoad();
   }, []);
   useEffect(() => {
-    if(addedChicksNumber){
-      setIsDisabled(false)
+    if (addedChicksNumber) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
     }
-    else{setIsDisabled(true)}
   }, [addedChicksNumber]);
-  useEffect(() => {}, [addedChicksNumber,addedFoodQuantity,addedWoodDustQuantity,AgeInDays,IsDisabled]);
+  useEffect(() => {}, [
+    addedChicksNumber,
+    addedFoodQuantity,
+    addedWoodDustQuantity,
+    AgeInDays,
+    IsDisabled,
+  ]);
 
   function collectParams() {
     let params: SaveNewQuantitiesVM = {
@@ -56,7 +62,7 @@ const StockOperations = () => {
 
   const saveValuesButtonClick = async () => {
     const params = collectParams();
-    debugger
+    debugger;
     if (
       !(
         params.addedChicksNum ||
@@ -83,7 +89,12 @@ const StockOperations = () => {
         if (result.isConfirmed) {
           const res = await StockApi.saveNewQuantities(params);
           if (res == "") {
-            Swal.fire("تم الحفظ بنجاح", "success");
+            Swal.fire({
+              icon: "success",
+              title: "تم الحفظ بنجاح",
+              showConfirmButton: false,
+              timer: 2000,
+            });
             onLoad();
           } else {
             debugger;
@@ -124,7 +135,7 @@ const StockOperations = () => {
             className="form-control"
             placeholder="عمر الكتاكيت المضافة..."
             min={0}
-            onChange={(e:any)=>setAgeInDays(Number(e.target.value))}
+            onChange={(e: any) => setAgeInDays(Number(e.target.value))}
             disabled={IsDisabled}
             style={{
               fontWeight: 900,
@@ -212,7 +223,7 @@ const StockOperations = () => {
               setAddedFoodQuantity(Number(e.target.value));
             }}
             className="form-control"
-            placeholder="كمية الطعام..."
+            placeholder="كمية العلف..."
             style={{
               fontWeight: 900,
               fontSize: "125%",
@@ -227,7 +238,7 @@ const StockOperations = () => {
               fontSize: "125%",
             }}
           >
-            :كمية الطعام
+            :كمية العلف
           </span>
         </div>
       </div>

@@ -34,14 +34,7 @@ namespace ChicksAppNew.Controllers
             var result = "";
             try
             {
-                var stockInsertOperation = new StockInsertionOperation
-                {
-                    ID = 0,
-                    AddedChicksNum = stock.addedChicksNum,
-                    AddedFoodQuantity = stock.addedFoodQuantity,
-                    AddedWoodDustQuantity = stock.addedWoodDustQuantity,
-                    InsertDate = DateTime.Now
-                };
+                
                 var currentStock = _context.GeneralStocks.FirstOrDefault();
                 if(currentStock != null)
                 {
@@ -73,8 +66,26 @@ namespace ChicksAppNew.Controllers
                     _context.Add(newStock);
 
                 }
-
-                _context.StockInsertionOperations.Add(stockInsertOperation);
+                var todayInsertOp = _context.StockInsertionOperations.FirstOrDefault(x => x.InsertDate.Date == DateTime.Now.Date);
+                if(todayInsertOp != null)
+                {
+                    todayInsertOp.AddedChicksNum = todayInsertOp.AddedChicksNum+stock.addedChicksNum;
+                    todayInsertOp.AddedFoodQuantity = todayInsertOp.AddedFoodQuantity+stock.addedFoodQuantity;
+                    todayInsertOp.AddedWoodDustQuantity = todayInsertOp.AddedWoodDustQuantity+stock.addedWoodDustQuantity;
+                }
+                else
+                {
+                    var stockInsertOperation = new StockInsertionOperation
+                    {
+                        ID = 0,
+                        AddedChicksNum = stock.addedChicksNum,
+                        AddedFoodQuantity = stock.addedFoodQuantity,
+                        AddedWoodDustQuantity = stock.addedWoodDustQuantity,
+                        InsertDate = DateTime.Now
+                    };
+                    _context.StockInsertionOperations.Add(stockInsertOperation);
+                }
+               
                 _context.SaveChanges();
             }
             catch (Exception e)

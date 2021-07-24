@@ -124,7 +124,7 @@ const WardsInsertOperations = () => {
               fontSize: "125%",
             }}
           >
-            كمية الطعام المستهلكة:
+            كمية العلف المستهلكة:
           </span>
         </div>
         <div className="col-md-4">
@@ -136,7 +136,7 @@ const WardsInsertOperations = () => {
               setAddedFoodQuantity(Number(e.target.value));
             }}
             className="form-control"
-            placeholder="كمية الطعام..."
+            placeholder="كمية العلف..."
             style={{
               fontWeight: 900,
               fontSize: "125%",

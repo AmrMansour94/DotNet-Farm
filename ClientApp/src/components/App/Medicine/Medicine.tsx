@@ -167,11 +167,11 @@ const Medicine = () => {
             <label
               style={{
                 color: "white",
-                fontWeight: 900,
-                fontSize: "125%",
+                fontWeight: 1100,
+                fontSize: "160%",
               }}
             >
-              اضافة الي العنبر
+              حفظ
             </label>
           </button>
         </div>

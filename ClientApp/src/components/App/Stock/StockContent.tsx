@@ -1,14 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StockApi } from "../../../Services/StockServices";
+import { StockContentVM } from "../../../VM/StockVM";
 
 const StockContent = () => {
-
+  const [StockContent, setStockContent] = useState<StockContentVM>();
+  
   useEffect(() => {
   onload();
   }, [])
+  useEffect(() => {
+
+    }, [StockContent])
 
   const onload =async ()=>{
     const data = await StockApi.getStockContent()
+    setStockContent(data)
   }
 
   return (
@@ -29,7 +35,7 @@ const StockContent = () => {
         </span>
       </div>
       <div className="row" style={{ margin: "20px", direction: "rtl" }}>
-        <div className="col-md-2">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
@@ -40,18 +46,19 @@ const StockContent = () => {
             عدد الكتاكيت الاجمالي:
           </span>
         </div>
-        <div className="col-md-1">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
               fontWeight: 900,
               fontSize: "125%",
+              float:"right"
             }}
           >
-            "0"
+            {StockContent?.totalChicksNum}
           </span>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
@@ -62,18 +69,21 @@ const StockContent = () => {
             عدد الكتاكيت المتاح:
           </span>
         </div>
-        <div className="col-md-1">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
               fontWeight: 900,
               fontSize: "125%",
+              float:"right"
             }}
           >
-            "0"
+            {StockContent?.currentChicksNum}
           </span>
         </div>
-        <div className="col-md-2">
+        </div>
+        <div className="row" style={{ margin: "20px", direction: "rtl" }}>
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
@@ -81,22 +91,23 @@ const StockContent = () => {
               fontSize: "125%",
             }}
           >
-            كمية الطعام المتاحة:
+            كمية العلف المتاحة:
           </span>
         </div>
-        <div className="col-md-1">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
               fontWeight: 900,
               fontSize: "125%",
+              float:"right"
             }}
           >
-            "0"
+            {StockContent?.availableFoodQuantity} كجم
           </span>
         </div>
 
-        <div className="col-md-2">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
@@ -108,15 +119,16 @@ const StockContent = () => {
           </span>
         </div>
 
-        <div className="col-md-1">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
               fontWeight: 900,
               fontSize: "125%",
+              float:"right"
             }}
           >
-            "0"
+            {StockContent?.availableWoodDust} كجم
           </span>
         </div>
       </div>
