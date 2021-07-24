@@ -23,14 +23,15 @@ namespace ChicksAppNew
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           services.AddControllers()
-            //.AddJsonOptions(options =>
-            //   options.JsonSerializerOptions.PropertyNamingPolicy = null);
-            //services.AddControllersWithViews()
-    .AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
-            //  services.AddControllersWithViews();
+            services.AddControllers()
+    .AddNewtonsoftJson(options => { options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
+            //services.AddControllers()
+            //         .AddJsonOptions(options =>
+            //         {
+            //             // Use the default property (Pascal) casing.
+            //             options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            //         }
+            //    );
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -78,10 +79,10 @@ namespace ChicksAppNew
 
             app.UseCors(corsPolicy);
             app.UseHttpsRedirection();
-            
+
             app.UseSpaStaticFiles();
 
-            
+
 
             app.UseEndpoints(endpoints =>
             {

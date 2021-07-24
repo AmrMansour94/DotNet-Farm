@@ -25,7 +25,7 @@ namespace ChicksAppNew.Controllers
         }
 
         [HttpPost]
-        public string SaveNewQuantities([FromBody] StockAddNewQuantitiesVM stock)
+        public string SaveNewQuantities([FromForm] StockAddNewQuantitiesVM stock)
         {
             if (!(stock.addedChicksNum > 0 || stock.addedFoodQuantity > 0 || stock.addedWoodDustQuantity > 0))
             {
@@ -43,13 +43,36 @@ namespace ChicksAppNew.Controllers
                     InsertDate = DateTime.Now
                 };
                 var currentStock = _context.GeneralStocks.FirstOrDefault();
-                currentStock.TotalFoodQuantity = stock.addedFoodQuantity + currentStock.TotalFoodQuantity;
-                currentStock.CurrentFoodQuantity = currentStock.CurrentFoodQuantity + stock.addedFoodQuantity;
-                currentStock.TotalWoodDustQuantity = stock.addedWoodDustQuantity + currentStock.TotalWoodDustQuantity;
-                currentStock.CurrentWoodDustQuantity = stock.addedWoodDustQuantity + currentStock.CurrentWoodDustQuantity;
-                currentStock.TotalInitialChicksNum = currentStock.TotalInitialChicksNum + stock.addedChicksNum;
-                currentStock.TotalCurrentChicksNum = currentStock.TotalCurrentChicksNum + stock.addedChicksNum;
+                if(currentStock != null)
+                {
+                    currentStock.TotalFoodQuantity = stock.addedFoodQuantity + currentStock.TotalFoodQuantity;
+                    currentStock.CurrentFoodQuantity = currentStock.CurrentFoodQuantity + stock.addedFoodQuantity;
+                    currentStock.TotalWoodDustQuantity = stock.addedWoodDustQuantity + currentStock.TotalWoodDustQuantity;
+                    currentStock.CurrentWoodDustQuantity = stock.addedWoodDustQuantity + currentStock.CurrentWoodDustQuantity;
+                    currentStock.TotalInitialChicksNum = currentStock.TotalInitialChicksNum + stock.addedChicksNum;
+                    currentStock.TotalCurrentChicksNum = currentStock.TotalCurrentChicksNum + stock.addedChicksNum;
+                }
+                else
+                {
+                    if (stock.addedChicksNum == 0)
+                        return "يرجي ادخال عدد الكتاكيت الابتدائي";
+                    if (stock.AgeInDays == 0)
+                        return "يرجي ادخال عمر الكتاكيت الابتدائي";
+                    var newStock = new GeneralStock { 
+                    
+                        ID=0,
+                        CurrentFoodQuantity= stock.addedFoodQuantity,
+                        CurrentWoodDustQuantity = stock.addedWoodDustQuantity,
+                        TotalFoodQuantity = stock.addedFoodQuantity,
+                        TotalWoodDustQuantity = stock.addedWoodDustQuantity,
+                        AgeInDays = stock.AgeInDays,
+                        TotalCurrentChicksNum = stock.addedChicksNum,
+                        TotalDeadChicksNum = 0,
+                        TotalInitialChicksNum= stock.addedChicksNum
+                    };
+                    _context.Add(newStock);
 
+                }
 
                 _context.StockInsertionOperations.Add(stockInsertOperation);
                 _context.SaveChanges();

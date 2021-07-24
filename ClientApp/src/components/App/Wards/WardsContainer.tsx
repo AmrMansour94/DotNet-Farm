@@ -27,6 +27,7 @@ const WardsContainer = () => {
       window.location.href = "/Login";
     }
     const data = await WardsApi.getWardsList();
+    console.log(data)
     setWardsList(data);
   };
 

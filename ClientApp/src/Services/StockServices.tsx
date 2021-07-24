@@ -10,12 +10,15 @@ export const StockApi = {
   },
 
   saveNewQuantities: async (stock: SaveNewQuantitiesVM): Promise<string> => {
-    var formData = new FormData();
-    formData.append("stock", JSON.stringify(stock));
+    var data = new FormData();
+    data.append("addedChicksNum", String(stock.addedChicksNum));
+    data.append("addedFoodQuantity", String(stock.addedFoodQuantity));
+    data.append("addedWoodDustQuantity", String(stock.addedWoodDustQuantity));
+    data.append("AgeInDays", String(stock.AgeInDays));
     const req1 = await axios({
       method: "post",
       url: getBaseUrl() + "/Stock/SaveNewQuantities",
-      data: {stock : stock},
+      data: data,
     }).then((res) => res.data)
     .catch((err) => err.data);
     //  const req = await axios.post(getBaseUrl() + "/Stock/SaveNewQuantities" , formData)
