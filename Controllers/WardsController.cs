@@ -1,13 +1,13 @@
 ﻿using ChicksApp.Context;
 using ChicksApp.VM;
 using ChicksAppNew.VM;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
 
 namespace ChicksApp.Controllers
 {
-    public class WardsController : ApiController
+    public class WardsController : ControllerBase
     {
         private readonly DataContext _context;
 

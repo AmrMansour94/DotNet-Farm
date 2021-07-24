@@ -23,8 +23,14 @@ namespace ChicksAppNew
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllersWithViews();
+           services.AddControllers()
+            //.AddJsonOptions(options =>
+            //   options.JsonSerializerOptions.PropertyNamingPolicy = null);
+            //services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+            //  services.AddControllersWithViews();
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -45,9 +51,13 @@ namespace ChicksAppNew
 
             // Adjust Json Return Values To Use Same Format As ViewModels
 
-            services.AddControllers()
-            .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
+            //services.AddControllers()
+            //.AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
+
+            //services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

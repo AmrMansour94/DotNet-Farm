@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { WardsApi } from "../../../Services/WardsServices";
-import { IKeyValuePairsVM } from "../../../VM/KeyValuePairs";
 import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { storeState } from "../../..";
-import { LoginInitialState, LoginDispatcher } from "../../../LoginReducer";
-import WardContent from "./WardContent";
+import { LoginInitialState } from "../../../LoginReducer";
+
 
 const WardsInsertOperations = () => {
   const { User } = useSelector<storeState, LoginInitialState>(

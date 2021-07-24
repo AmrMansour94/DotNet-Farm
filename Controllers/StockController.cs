@@ -3,16 +3,12 @@ using ChicksApp.Domain;
 using ChicksAppNew.VM;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Http;
-using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
-using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 
 namespace ChicksAppNew.Controllers
 {
-    public class StockController : ApiController
+    
+    public class StockController : ControllerBase
     {
         private readonly DataContext _context;
 
@@ -29,13 +25,11 @@ namespace ChicksAppNew.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult SaveNewQuantities(StockAddNewQuantitiesVM stock)
+        public string SaveNewQuantities([FromBody] StockAddNewQuantitiesVM stock)
         {
-            //var stock = JsonSerializer
-            //    .Deserialize<StockAddNewQuantitiesVM>(HttpContext.Current.Request.Params["stock"]);
             if (!(stock.addedChicksNum > 0 || stock.addedFoodQuantity > 0 || stock.addedWoodDustQuantity > 0))
             {
-                return Json("عذرا لم يتم ادخال قيم لحفظها");
+                return "عذرا لم يتم ادخال قيم لحفظها";
             }
             var result = "";
             try
@@ -64,7 +58,7 @@ namespace ChicksAppNew.Controllers
             {
                 result = e.Message;
             }
-            return Json(result);
+            return result;
         }
     }
 }

@@ -12,14 +12,15 @@ export const StockApi = {
   saveNewQuantities: async (stock: SaveNewQuantitiesVM): Promise<string> => {
     var formData = new FormData();
     formData.append("stock", JSON.stringify(stock));
-    // const req = await axios({
-    //   method: "post",
-    //   url: getBaseUrl() + "/Stock/SaveNewQuantities",
-    //   data: stock,
-    // });
-     const req = await axios.post(getBaseUrl() + "/Stock/SaveNewQuantities" , formData)
-      .then((res) => res.data)
-      .catch((err) => err.data);
-    return req;
+    const req1 = await axios({
+      method: "post",
+      url: getBaseUrl() + "/Stock/SaveNewQuantities",
+      data: {stock : stock},
+    }).then((res) => res.data)
+    .catch((err) => err.data);
+    //  const req = await axios.post(getBaseUrl() + "/Stock/SaveNewQuantities" , formData)
+    //   .then((res) => res.data)
+    //   .catch((err) => err.data);
+    return req1;
   },
 };

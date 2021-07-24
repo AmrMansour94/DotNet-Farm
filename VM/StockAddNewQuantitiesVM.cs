@@ -7,6 +7,7 @@ namespace ChicksAppNew.VM
 {
     public class StockAddNewQuantitiesVM
     {
+
         public int addedChicksNum { get; set; }
         public decimal addedFoodQuantity { get; set; }
         public decimal addedWoodDustQuantity { get; set; }

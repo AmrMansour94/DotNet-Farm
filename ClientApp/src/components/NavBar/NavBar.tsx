@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import TocOutlinedIcon from '@material-ui/icons/TocOutlined';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined';
-import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
-import Box from '@material-ui/core/Box';
-import { IKeyValuePairsVM } from '../../VM/KeyValuePairs';
-import { WardsApi } from '../../Services/WardsServices';
-import MainComponent from '../App/MainComponent';
-import WardsContainer from '../App/Wards/WardsContainer';
-import StockMainContainer from '../App/Stock/StockMainContainer';
-import Expenses from '../App/Expenses/Expenses';
-import ReportsMainContainer from '../App/Reports/ReportsMainContainer';
+import React, { useEffect, useState } from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
+import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
+import AssessmentOutlinedIcon from "@material-ui/icons/AssessmentOutlined";
+import AttachMoneyOutlinedIcon from "@material-ui/icons/AttachMoneyOutlined";
+import Box from "@material-ui/core/Box";
+import { IKeyValuePairsVM } from "../../VM/KeyValuePairs";
+import { WardsApi } from "../../Services/WardsServices";
+import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
+import WardsContainer from "../App/Wards/WardsContainer";
+import StockMainContainer from "../App/Stock/StockMainContainer";
+import Expenses from "../App/Expenses/Expenses";
+import ReportsMainContainer from "../App/Reports/ReportsMainContainer";
+import MedicineMainContainer from "../App/Medicine/MedicineMainContainer";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -35,12 +36,9 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box>
-          <div className="card" style={{margin:"1px"}}>
-          <div className="card-body">
-            {children}
+          <div className="card" style={{ margin: "1px" }}>
+            <div className="card-body">{children}</div>
           </div>
-          </div>
-          
         </Box>
       )}
     </div>
@@ -50,14 +48,14 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: any) {
   return {
     id: `scrollable-prevent-tab-${index}`,
-    'aria-controls': `scrollable-prevent-tabpanel-${index}`,
+    "aria-controls": `scrollable-prevent-tabpanel-${index}`,
   };
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
-    width: '100%',
+    width: "100%",
     backgroundColor: theme.palette.background.paper,
   },
 }));
@@ -65,28 +63,26 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function TabBar() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [wardsList , setWardsList] = useState<IKeyValuePairsVM[]>([]);
+  const [wardsList, setWardsList] = useState<IKeyValuePairsVM[]>([]);
 
-  const onLoad = async () =>
-  {
+  const onLoad = async () => {
     const data = await WardsApi.getWardsList();
-    setWardsList(data)
-    console.log(data)
-  }
+    setWardsList(data);
+    console.log(data);
+  };
 
   useEffect(() => {
     onLoad();
-  }, [])
-  useEffect(() => {
-  }, [wardsList])
+  }, []);
+  useEffect(() => {}, [wardsList]);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
   return (
-    <div className={classes.root} style={{display:"block"}}>
-      <AppBar position="relative" style={{backgroundColor : "#9c27b0"}}>
+    <div className={classes.root} style={{ display: "block" }}>
+      <AppBar position="relative" style={{ backgroundColor: "#9c27b0" }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -94,25 +90,58 @@ export default function TabBar() {
           scrollButtons="off"
           aria-label="scrollable prevent tabs example"
         >
-          <Tab icon={<HomeOutlinedIcon />} aria-label="phone" {...a11yProps(0)} label = "تهيئة المخزن" style={{width : 300}} />
-          <Tab icon={<TocOutlinedIcon />} aria-label="favorite" {...a11yProps(1)} label = "تهيئة العنابر" style={{width : 300}}  />
-          <Tab icon={<AttachMoneyOutlinedIcon />} aria-label="person" {...a11yProps(2)} label = "مصروفات اضافية" style={{width : 300}} />
-          <Tab icon={<AssessmentOutlinedIcon />} aria-label="help" {...a11yProps(3)} label = "التقارير" style={{width : 300}}/>
+          <Tab
+            icon={<HomeOutlinedIcon />}
+            aria-label="phone"
+            {...a11yProps(0)}
+            label="تهيئة المخزن"
+            style={{ width: 220 }}
+          />
+          <Tab
+            icon={<TocOutlinedIcon />}
+            aria-label="favorite"
+            {...a11yProps(1)}
+            label="تهيئة العنابر"
+            style={{ width: 220 }}
+          />
+          <Tab
+            icon={<AttachMoneyOutlinedIcon />}
+            aria-label="person"
+            {...a11yProps(2)}
+            label="مصروفات اضافية"
+            style={{ width: 220 }}
+          />
+          <Tab
+            icon={<LocalHospitalIcon />}
+            aria-label="help"
+            {...a11yProps(3)}
+            label="تهيئة الدواء"
+            style={{ width: 220 }}
+          />
+          <Tab
+            icon={<AssessmentOutlinedIcon />}
+            aria-label="help"
+            {...a11yProps(4)}
+            label="التقارير"
+            style={{ width: 220 }}
+          />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0} >
+      <TabPanel value={value} index={0}>
         <StockMainContainer />
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <WardsContainer />
+        <WardsContainer />
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <Expenses />
+        <Expenses />
       </TabPanel>
       <TabPanel value={value} index={3}>
-      <ReportsMainContainer />
+        <MedicineMainContainer />
       </TabPanel>
-     
+      <TabPanel value={value} index={4}>
+        <ReportsMainContainer />
+      </TabPanel>
     </div>
   );
 }

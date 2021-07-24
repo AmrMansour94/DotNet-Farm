@@ -20,7 +20,7 @@ const ReportsMainContainer = () => {
       <div className="card-header card-header-text card-header-primary">
         <div className="card-text">
           <h4 className="card-title" style={{ textAlign: "center" }}>
-            الادخال اليومي للعنابر
+           التقارير
           </h4>
         </div>
       </div>
