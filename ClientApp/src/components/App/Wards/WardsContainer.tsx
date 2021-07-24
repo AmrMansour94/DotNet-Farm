@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { storeState } from "../../..";
 import { LoginInitialState } from "../../../LoginReducer";
@@ -19,7 +19,8 @@ const WardsContainer = () => {
   );
 
   const [wardsList, setWardsList] = useState<IKeyValuePairsVM[]>([]);
-  const [selectedWard, setSelectedWard] = useState<number>(0);
+  const [selectedWard, setSelectedWard] = useState<string>();
+  const [selectedWardID, setSelectedWardID] = useState<number>(0);
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
   const onLoad = async () => {
@@ -27,15 +28,34 @@ const WardsContainer = () => {
       window.location.href = "/Login";
     }
     const data = await WardsApi.getWardsList();
-    console.log(data)
+    console.log(data);
     setWardsList(data);
   };
 
   useEffect(() => {
     onLoad();
   }, []);
-  useEffect(() => {}, [wardsList, selectedWard, isHidden]);
-  const onSaveClick = () => {};
+  useEffect(() => {}, [wardsList, selectedWardID, isHidden]);
+  useEffect(() => {
+    wardsList.forEach((ward) => {
+      if (ward.Name == selectedWard) {
+        setSelectedWardID(ward.ID);
+        setIsHidden(true);
+      }
+    });
+  }, [selectedWard]);
+
+  const wardContent = useMemo(() => {
+    return (
+      <div className="card-body" hidden={isHidden}>
+        <div className="card">
+          <StockContent />
+          <WardContent wardId={selectedWardID} />
+          <WardsInsertOperations wardID={selectedWardID} />
+        </div>
+      </div>
+    );
+  }, [isHidden, selectedWard]);
 
   return (
     <div>
@@ -57,7 +77,7 @@ const WardsContainer = () => {
                   className="btn btn-primary btn-fab btn-fab-mini btn-round"
                   onClick={() => {
                     setIsHidden(false);
-                    console.log(User);
+                    console.log(selectedWardID);
                   }}
                 >
                   <i className="material-icons">
@@ -70,14 +90,21 @@ const WardsContainer = () => {
                   className="form-control selectpicker"
                   data-style="btn btn-link"
                   id="exampleFormControlSelect1"
-                  onChange={() => setIsHidden(true)}
+                  onChange={(e: any) => {
+                    debugger;
+                    setSelectedWard(e.target.value);
+                  }}
                   style={{
                     fontWeight: 900,
                     fontSize: "125%",
                   }}
                 >
                   {wardsList.map((ward: IKeyValuePairsVM) => {
-                    return <option key={ward.ID}>{ward.Name}</option>;
+                    return (
+                      <option key={ward.ID} accessKey={String(ward.ID)}>
+                        {ward.Name}
+                      </option>
+                    );
                   })}
                 </select>
               </div>
@@ -98,13 +125,7 @@ const WardsContainer = () => {
           </div>
         </div>
 
-        <div className="card-body" hidden={isHidden}>
-          <div className="card">
-            <StockContent />
-            <WardContent wardId={selectedWard} />
-            <WardsInsertOperations />
-          </div>
-        </div>
+        {wardContent}
       </div>
     </div>
   );

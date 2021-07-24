@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { WardsApi } from "../../../Services/WardsServices";
+import { WardContentVM } from "../../../VM/WardContentVM";
 
 interface Iprops {
   wardId: number;
 }
 
 const WardContent = (props: Iprops) => {
+  const [WardContent, setWardContent] = useState<WardContentVM>();
+
+  useEffect(() => {
+    if (props) {
+      onload();
+    }
+  }, [props]);
+  useEffect(() => {}, [WardContent]);
+
+  const onload = async () => {
+    const data = await WardsApi.getWardContent(props.wardId);
+    setWardContent(data);
+  };
   return (
     <>
       <div className="row justify-content-center" style={{ margin: "20px" }}>
@@ -23,67 +38,19 @@ const WardContent = (props: Iprops) => {
         </span>
       </div>
       <div className="row justify-content-center" style={{ margin: "20px" }}>
-        {/* Line 2 */}
-
-        <div className="col-md-1">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
               fontWeight: 900,
               fontSize: "125%",
+              float:"right"
             }}
           >
-            "0"
+            {WardContent?.deadChicksNum ?? 0}
           </span>
         </div>
-
-        <div className="col-md-2">
-          <span
-            style={{
-              textShadow: "4px 4px 8px #f2cfff",
-              fontWeight: 900,
-              fontSize: "125%",
-            }}
-          >
-            :كمية النشارة
-          </span>
-        </div>
-
-        <div className="col-md-1">
-          <span
-            style={{
-              textShadow: "4px 4px 8px #f2cfff",
-              fontWeight: 900,
-              fontSize: "125%",
-            }}
-          >
-            "0"
-          </span>
-        </div>
-        <div className="col-md-2">
-          <span
-            style={{
-              textShadow: "4px 4px 8px #f2cfff",
-              fontWeight: 900,
-              fontSize: "125%",
-            }}
-          >
-            :كمية العلف
-          </span>
-        </div>
-
-        <div className="col-md-1">
-          <span
-            style={{
-              textShadow: "4px 4px 8px #f2cfff",
-              fontWeight: 900,
-              fontSize: "125%",
-            }}
-          >
-            "0"
-          </span>
-        </div>
-        <div className="col-md-2">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
@@ -94,18 +61,19 @@ const WardContent = (props: Iprops) => {
             :عدد النوافق
           </span>
         </div>
-        <div className="col-md-1">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",
               fontWeight: 900,
               fontSize: "125%",
+              float:"right"
             }}
           >
-            "0"
+            {WardContent?.currentChicksNum ?? 0}
           </span>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-3">
           <span
             style={{
               textShadow: "4px 4px 8px #f2cfff",

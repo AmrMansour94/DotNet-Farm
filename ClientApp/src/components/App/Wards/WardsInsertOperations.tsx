@@ -3,9 +3,15 @@ import FavoriteBorderRoundedIcon from "@material-ui/icons/FavoriteBorderRounded"
 import { useSelector } from "react-redux";
 import { storeState } from "../../..";
 import { LoginInitialState } from "../../../LoginReducer";
+import { SaveWardNewQuantitiesVM } from "../../../VM/WardContentVM";
+import Swal from "sweetalert2";
+import { StockApi } from "../../../Services/StockServices";
+import { WardsApi } from "../../../Services/WardsServices";
 
-
-const WardsInsertOperations = () => {
+interface IProps {
+  wardID : number
+}
+const WardsInsertOperations = (props : IProps) => {
   const { User } = useSelector<storeState, LoginInitialState>(
     (state: storeState) => {
       return {
@@ -36,7 +42,67 @@ const WardsInsertOperations = () => {
     avgBirdWeight,
     deadChicksNumber,
   ]);
-  const onSaveClick = () => {};
+
+function collectParams() {
+    let params: SaveWardNewQuantitiesVM = {
+      wardID : props.wardID,
+      addedChicksNum: addedChicksNumber,
+      addedFoodQuantity: addedFoodQuantity,
+      addedWoodDustQuantity: addedWoodDustQuantity,
+      avgBirdWeight: avgBirdWeight,
+    };
+
+    return params;
+  }
+
+  const onSaveClick = async () => {
+    const params = collectParams();
+    debugger;
+    if (
+      !(
+        params.addedChicksNum ||
+        params.addedFoodQuantity ||
+        params.addedWoodDustQuantity
+      )
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "عذرا",
+        text: "يرجي ادخال قيمة واحدة علي الاقل للحفظ",
+      });
+    } else {
+      Swal.fire({
+        title: "هل تريد الحفظ؟",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "نعم",
+        cancelButtonText: "لا",
+        reverseButtons: true,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await WardsApi.saveNewQuantities(params);
+          if (res == "") {
+            Swal.fire({
+              icon: "success",
+              title: "تم الحفظ بنجاح",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            onLoad();
+          } else {
+            debugger;
+            Swal.fire({
+              icon: "error",
+              title: "عذرا",
+              text: res,
+            });
+          }
+        }
+      });
+    }
+  };
 
   return (
     <>
