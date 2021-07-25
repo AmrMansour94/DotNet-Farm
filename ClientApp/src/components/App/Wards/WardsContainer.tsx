@@ -8,6 +8,7 @@ import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 import WardContent from "./WardContent";
 import WardsInsertOperations from "./WardsInsertOperations";
 import StockContent from "../Stock/StockContent";
+import Swal from "sweetalert2";
 
 const WardsContainer = () => {
   const { User } = useSelector<storeState, LoginInitialState>(
@@ -37,25 +38,29 @@ const WardsContainer = () => {
   }, []);
   useEffect(() => {}, [wardsList, selectedWardID, isHidden]);
   useEffect(() => {
-    wardsList.forEach((ward) => {
+    debugger;
+    for (const ward of wardsList) {
       if (ward.Name == selectedWard) {
         setSelectedWardID(ward.ID);
         setIsHidden(true);
+        break;
       }
-    });
+      else {setSelectedWardID(0)}
+    }
   }, [selectedWard]);
 
   const wardContent = useMemo(() => {
-    return (
-      <div className="card-body" hidden={isHidden}>
+    debugger;
+    return selectedWardID>0 ? (
+      <div className="card-body">
         <div className="card">
           <StockContent />
           <WardContent wardId={selectedWardID} />
           <WardsInsertOperations wardID={selectedWardID} />
         </div>
       </div>
-    );
-  }, [isHidden, selectedWard]);
+    ) : null;
+  }, [selectedWardID]);
 
   return (
     <div>
@@ -76,8 +81,20 @@ const WardsContainer = () => {
                 <button
                   className="btn btn-primary btn-fab btn-fab-mini btn-round"
                   onClick={() => {
-                    setIsHidden(false);
+                    if(selectedWardID)
+                    {
+                      setIsHidden(false);
                     console.log(selectedWardID);
+                    }
+                    else{
+                      Swal.fire({
+                        icon: "error",
+                        title: "يرجي اختيار العنبر اولا",
+                        showConfirmButton: false,
+                        timer: 2000,
+                      });
+                    }
+                    
                   }}
                 >
                   <i className="material-icons">
@@ -99,6 +116,7 @@ const WardsContainer = () => {
                     fontSize: "125%",
                   }}
                 >
+                  <option>--</option>
                   {wardsList.map((ward: IKeyValuePairsVM) => {
                     return (
                       <option key={ward.ID} accessKey={String(ward.ID)}>

@@ -8,5 +8,6 @@ export interface SaveWardNewQuantitiesVM {
     addedChicksNum: number,
     addedFoodQuantity: number,
     addedWoodDustQuantity: number,
+    deadChicksNum : number,
     avgBirdWeight: number,
 }

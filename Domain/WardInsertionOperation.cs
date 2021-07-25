@@ -16,6 +16,11 @@ namespace ChicksApp.Domain
         public decimal ConsumedFoodQuantityPerDay { get; set; }
         public decimal ConsumedWoodDustQuantityPerDay { get; set; }
         public DateTime InsertionDate { get; set; }
+        public decimal DeadRatio { get; set; }
+        public decimal ConversionFactor { get; set; }
+        public int Age { get; set; }
+        public decimal TotalFoodQuantity { get; set; }
+        public decimal TotalWoodDust { get; set; }
         public virtual Ward Ward { get; set; }
 
     }

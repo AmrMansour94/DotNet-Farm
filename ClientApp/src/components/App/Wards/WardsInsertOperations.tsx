@@ -49,6 +49,7 @@ function collectParams() {
       addedChicksNum: addedChicksNumber,
       addedFoodQuantity: addedFoodQuantity,
       addedWoodDustQuantity: addedWoodDustQuantity,
+      deadChicksNum : deadChicksNumber,
       avgBirdWeight: avgBirdWeight,
     };
 
