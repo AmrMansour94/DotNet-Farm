@@ -131,6 +131,9 @@ namespace ChicksAppNew.Migrations
                     b.Property<decimal>("TotalFoodQuantity")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("TotalNumOfChicks")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("TotalWoodDust")
                         .HasColumnType("decimal(18,2)");
 

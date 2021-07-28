@@ -11,3 +11,21 @@ export interface SaveWardNewQuantitiesVM {
     deadChicksNum : number,
     avgBirdWeight: number,
 }
+
+
+export interface wardDailyReportVM {
+     iD : number
+     wardID : number
+     wardName : string
+     addedChicksNum : number
+     deadChicksNum : number
+     consumedFoodQuantityPerDay :number
+     consumedWoodDustQuantityPerDay :number
+     insertionDate :Date
+     deadRatio :number
+     conversionFactor :number
+     age :number
+     totalFoodQuantity :number
+     totalWoodDust :number
+     TotalNumOfChicks : number
+}

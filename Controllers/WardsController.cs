@@ -49,10 +49,8 @@ namespace ChicksApp.Controllers
                 if (currentStock == null) return "لم يتم تهيئة المخزن اولا";
                 if (currentWard != null)
                 {
-                    currentStock.CurrentFoodQuantity = currentStock.CurrentFoodQuantity - stock.addedFoodQuantity;
-                    currentStock.CurrentWoodDustQuantity = currentStock.CurrentWoodDustQuantity - stock.addedWoodDustQuantity;
-                    currentStock.TotalCurrentChicksNum = currentStock.TotalCurrentChicksNum - stock.addedChicksNum - stock.deadChicksNum;
-
+                    if (currentStock.TotalCurrentChicksNum < stock.addedChicksNum)
+                        return "عدد الكتاكيت المضافة اكبر من عدد الكتاكيت المتاح";
 
                     currentWard.ConsumedFoodQuantity = currentWard.ConsumedFoodQuantity + stock.addedFoodQuantity;
                     currentWard.ConsumedWoodDust = currentWard.ConsumedWoodDust + stock.addedWoodDustQuantity;
@@ -80,9 +78,15 @@ namespace ChicksApp.Controllers
                         WardID = stock.wardID
                     };
                     _context.Add(newStock);
-                    _context.SaveChanges();
+                    
 
                 }
+                currentStock.CurrentFoodQuantity = currentStock.CurrentFoodQuantity - stock.addedFoodQuantity;
+                currentStock.CurrentWoodDustQuantity = currentStock.CurrentWoodDustQuantity - stock.addedWoodDustQuantity;
+                if (currentStock.TotalCurrentChicksNum > 0 && currentStock.TotalCurrentChicksNum > (stock.deadChicksNum + stock.addedChicksNum))
+                    currentStock.TotalCurrentChicksNum = currentStock.TotalCurrentChicksNum - stock.addedChicksNum - stock.deadChicksNum;
+                else currentStock.TotalCurrentChicksNum = 0;
+                _context.SaveChanges();
                 currentWard = _context.WardsStocks.FirstOrDefault(x => x.WardID == stock.wardID);
                 var todayInsertOp = _context.WardInsertionOperations.FirstOrDefault(x => x.InsertionDate.Date == DateTime.Now.Date && x.WardID == stock.wardID);
                 if (todayInsertOp != null)
@@ -95,6 +99,7 @@ namespace ChicksApp.Controllers
                     todayInsertOp.TotalWoodDust = currentWard.ConsumedWoodDust;
                     todayInsertOp.ConversionFactor = ((todayInsertOp.ConversionFactor + stock.addedFoodQuantity) * 1000) / currentWard.CurrentNumOfChicks;
                     todayInsertOp.DeadRatio = currentWard.DeathRatio;
+                    todayInsertOp.TotalNumOfChicks = currentWard.CurrentNumOfChicks;
                 }
                 else
                 {
@@ -111,8 +116,9 @@ namespace ChicksApp.Controllers
                         DeadRatio = currentWard.DeathRatio,
                         Age = currentWard.AgeInDays,
                         TotalFoodQuantity = currentWard.ConsumedFoodQuantity,
-                        TotalWoodDust = currentWard.ConsumedWoodDust
-                    };
+                        TotalWoodDust = currentWard.ConsumedWoodDust,
+                        TotalNumOfChicks = currentWard.CurrentNumOfChicks
+                };
                     _context.WardInsertionOperations.Add(wardInsertOperation);
                 }
 
@@ -129,6 +135,29 @@ namespace ChicksApp.Controllers
         public WardContentVM getWardContent(int id)
         {
             var content = _context.WardsStocks.Where(x=>x.WardID == id).Select(x => new WardContentVM { currentChicksNum = x.CurrentNumOfChicks, deadChicksNum = x.DeadChicks}).FirstOrDefault();
+            return content;
+        }
+
+        [HttpGet]
+        public List<WardDailyReportVM> getWardDailyDataReport(int id)
+        {
+            var content = _context.WardInsertionOperations.Where(x => x.WardID == id).Select(x=> new WardDailyReportVM { 
+            iD = x.ID,
+            insertionDate = x.InsertionDate,
+            totalFoodQuantity = x.TotalFoodQuantity,
+            wardName = x.Ward.Name,
+            addedChicksNum = x.AddedChicksNum,
+            age = x.Age,
+            consumedFoodQuantityPerDay = x.ConsumedFoodQuantityPerDay,
+            consumedWoodDustQuantityPerDay = x.ConsumedWoodDustQuantityPerDay,
+            conversionFactor = x.ConversionFactor,
+            deadChicksNum = x.DeadChicksNum,
+            deadRatio=x.DeadRatio,
+            TotalNumOfChicks=x.TotalNumOfChicks,
+            totalWoodDust=x.TotalWoodDust,
+            wardID = x.WardID
+
+            }).OrderBy(x=>x.insertionDate).ToList();
             return content;
         }
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IKeyValuePairsVM } from "../VM/KeyValuePairs";
 import { UserVM } from "../VM/UserVM";
-import { SaveWardNewQuantitiesVM, WardContentVM } from "../VM/WardContentVM";
+import { SaveWardNewQuantitiesVM, WardContentVM, wardDailyReportVM } from "../VM/WardContentVM";
 import { getBaseUrl } from "./GetBaseURL";
 
 export const WardsApi = {
@@ -12,6 +12,10 @@ export const WardsApi = {
 
   getWardContent : async (wardId : number): Promise<WardContentVM> => {
     const req = await axios.get(getBaseUrl() + "/Wards/getWardContent?id="+wardId);
+    return req.data;
+  },
+  getWardDailyDataReport : async (wardId : number): Promise<wardDailyReportVM[]> => {
+    const req = await axios.get(getBaseUrl() + "/Wards/getWardDailyDataReport?id="+wardId);
     return req.data;
   },
 

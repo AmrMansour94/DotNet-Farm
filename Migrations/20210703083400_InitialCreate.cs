@@ -33,8 +33,8 @@ namespace ChicksAppNew.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AddedChicksNum = table.Column<int>(type: "int", nullable: false),
-                    AddedFoodQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    AddedWoodDustQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    AddedFoodQuantity = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
+                    AddedWoodDustQuantity = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
                     InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -64,8 +64,8 @@ namespace ChicksAppNew.Migrations
                     WardID = table.Column<int>(type: "int", nullable: false),
                     AddedChicksNum = table.Column<int>(type: "int", nullable: false),
                     DeadChicksNum = table.Column<int>(type: "int", nullable: false),
-                    ConsumedFoodQuantityPerDay = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ConsumedWoodDustQuantityPerDay = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ConsumedFoodQuantityPerDay = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
+                    ConsumedWoodDustQuantityPerDay = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
                     InsertionDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -89,8 +89,8 @@ namespace ChicksAppNew.Migrations
                     InitialNumOfChicks = table.Column<int>(type: "int", nullable: false),
                     DeadChicks = table.Column<int>(type: "int", nullable: false),
                     CurrentNumOfChicks = table.Column<int>(type: "int", nullable: false),
-                    ConsumedFoodQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ConsumedWoodDust = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    ConsumedFoodQuantity = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
+                    ConsumedWoodDust = table.Column<decimal>(type: "decimal(18,3)", nullable: false)
                 },
                 constraints: table =>
                 {

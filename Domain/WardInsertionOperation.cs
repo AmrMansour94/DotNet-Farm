@@ -21,6 +21,7 @@ namespace ChicksApp.Domain
         public int Age { get; set; }
         public decimal TotalFoodQuantity { get; set; }
         public decimal TotalWoodDust { get; set; }
+        public int TotalNumOfChicks { get; set; }
         public virtual Ward Ward { get; set; }
 
     }

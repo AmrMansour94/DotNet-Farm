@@ -9,7 +9,7 @@ namespace ChicksAppNew.Migrations
             migrationBuilder.AddColumn<decimal>(
                 name: "DeathRatio",
                 table: "WardsStocks",
-                type: "decimal(18,2)",
+                type: "decimal(18,5)",
                 nullable: false,
                 defaultValue: 0m);
 
@@ -23,28 +23,28 @@ namespace ChicksAppNew.Migrations
             migrationBuilder.AddColumn<decimal>(
                 name: "ConversionFactor",
                 table: "WardInsertionOperations",
-                type: "decimal(18,2)",
+                type: "decimal(18,5)",
                 nullable: false,
                 defaultValue: 0m);
 
             migrationBuilder.AddColumn<decimal>(
                 name: "DeadRatio",
                 table: "WardInsertionOperations",
-                type: "decimal(18,2)",
+                type: "decimal(18,5)",
                 nullable: false,
                 defaultValue: 0m);
 
             migrationBuilder.AddColumn<decimal>(
                 name: "TotalFoodQuantity",
                 table: "WardInsertionOperations",
-                type: "decimal(18,2)",
+                type: "decimal(18,3)",
                 nullable: false,
                 defaultValue: 0m);
 
             migrationBuilder.AddColumn<decimal>(
                 name: "TotalWoodDust",
                 table: "WardInsertionOperations",
-                type: "decimal(18,2)",
+                type: "decimal(18,3)",
                 nullable: false,
                 defaultValue: 0m);
         }
