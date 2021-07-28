@@ -124,5 +124,13 @@ namespace ChicksApp.Controllers
             }
             return result;
         }
+
+        [HttpGet]
+        public WardContentVM getWardContent(int id)
+        {
+            var content = _context.WardsStocks.Where(x=>x.WardID == id).Select(x => new WardContentVM { currentChicksNum = x.CurrentNumOfChicks, deadChicksNum = x.DeadChicks}).FirstOrDefault();
+            return content;
+        }
+
     }
 }

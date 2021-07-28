@@ -34,7 +34,6 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const history = useHistory();
 
- 
   useEffect(() => {}, [userName, password]);
   useEffect(() => {
     debugger;
@@ -42,6 +41,14 @@ const Login = () => {
       history.push("/");
     }
   }, [User]);
+
+  useEffect(() => {onLoad()}, []);
+
+  async function onLoad () {
+  debugger
+  const res = await LoginApi.updateAge();
+  console.log(res)
+}
 
   const onClickHandler = async (e: any) => {
     e.preventDefault();

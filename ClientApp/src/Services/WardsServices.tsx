@@ -21,6 +21,7 @@ export const WardsApi = {
     data.append("addedChicksNum", String(Ward.addedChicksNum));
     data.append("addedFoodQuantity", String(Ward.addedFoodQuantity));
     data.append("addedWoodDustQuantity", String(Ward.addedWoodDustQuantity));
+    data.append("deadChicksNum", String(Ward.deadChicksNum));
     data.append("avgBirdWeight", String(Ward.avgBirdWeight));
     const req1 = await axios({
       method: "post",

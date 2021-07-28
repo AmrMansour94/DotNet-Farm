@@ -9,4 +9,8 @@ export const LoginApi = {
       });
       return req.data;
     },
+    updateAge: async (): Promise<number> => {
+      const req = await axios.get(getBaseUrl() + "/Stock/updateAge")
+      return req.data;
+    },
 }

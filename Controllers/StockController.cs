@@ -24,6 +24,24 @@ namespace ChicksAppNew.Controllers
             return content;
         }
 
+        [HttpGet]
+        public int updateAge(int id)
+        {
+            var content = _context.GeneralStocks.FirstOrDefault();
+            if(content !=null)
+            {
+                var days = Convert.ToInt32(Math.Floor((DateTime.Now.Date - content.LastAgeUpdate.Date).TotalDays));
+                if (days > 1)
+                {
+                    content.AgeInDays += days;
+                    _context.SaveChanges();
+                }
+                return content.AgeInDays;
+            }
+            else { return 0; }
+            
+        }
+
         [HttpPost]
         public string SaveNewQuantities([FromForm] StockAddNewQuantitiesVM stock)
         {
@@ -61,7 +79,8 @@ namespace ChicksAppNew.Controllers
                         AgeInDays = stock.AgeInDays,
                         TotalCurrentChicksNum = stock.addedChicksNum,
                         TotalDeadChicksNum = 0,
-                        TotalInitialChicksNum= stock.addedChicksNum
+                        TotalInitialChicksNum= stock.addedChicksNum,
+                        LastAgeUpdate = DateTime.Now
                     };
                     _context.Add(newStock);
 
