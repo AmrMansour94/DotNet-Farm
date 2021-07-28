@@ -1,14 +1,7 @@
-import React, { Component, Suspense, useEffect, useState } from "react";
-import { Layout } from "./components/Layout";
+import React, { Suspense, useEffect, useState } from "react";
+import 'devextreme/dist/css/dx.material.purple.light.css';
 import "./custom.css";
-import TabBar from "./components/NavBar/NavBar";
-import { useSelector, useDispatch } from "react-redux";
-import { storeState } from ".";
-import { LoginInitialState, LoginDispatcher } from "./LoginReducer";
-import LoginNavbar from "./components/NavBar/LoginNavbar";
-import { Link, BrowserRouter as Router , Switch, Route} from "react-router-dom";
-// import { Router, Switch, Route } from "react-router";
-import StockOperations from "./components/App/Stock/StockOperations";
+import { BrowserRouter as Router , Switch, Route} from "react-router-dom";
 import Login from "./components/Login/Login";
 import MainComponent from "./components/App/MainComponent";
 import axios from "axios";
@@ -19,7 +12,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {}, [isLoading]);
-
+ 
   axios.interceptors.request.use(
     function (config) {
       // spinning start to show

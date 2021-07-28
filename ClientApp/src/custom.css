@@ -13,7 +13,47 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+.dx-header-row > td > .dx-datagrid-text-content {
+  display: inline-block;
+  white-space: normal;
+  vertical-align: top;
+  text-align: center !important;
+  color: #fff !important;
+  font-size: medium !important;
+  font-weight: bold;
+}
+.dx-datagrid-table-content {
+  position: absolute;
+  top: 0;
+  text-align: center !important;
+}
+.dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td.dx-cell-modified:not(.dx-field-item-content):not(.dx-validation-pending),
+.dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td.dx-datagrid-invalid:not(.dx-field-item-content):not(.dx-validation-pending):not(.dx-datagrid-select-all),
+.dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td:not(.dx-validation-pending):not(.dx-datagrid-select-all) {
+  padding-right: 14px;
+  padding-left: 14px;
+  vertical-align: middle;
+  text-align: center !important;
+}
 
+
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+  border-bottom: 1px solid #515159;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  line-height: 20px;
+  font-weight: 500;
+  font-size: 12px;
+  background-color: rgba(0, 0, 255, 0.69) !important;
+}
+.dx-datagrid .dx-row-lines > td {
+  border-bottom: 1px solid #515159;
+  background: rgba(199, 255, 247, 0.47) !important;
+}
+
+.dx-datagrid .dx-row-lines > td {
+  border-bottom: 1px solid rgba(166, 166, 166, 0.47) !important;
+}
 /*!
 
  =========================================================

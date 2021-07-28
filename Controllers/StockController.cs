@@ -25,7 +25,7 @@ namespace ChicksAppNew.Controllers
         }
 
         [HttpGet]
-        public int updateAge(int id)
+        public int updateAge()
         {
             var content = _context.GeneralStocks.FirstOrDefault();
             if(content !=null)
@@ -34,6 +34,7 @@ namespace ChicksAppNew.Controllers
                 if (days > 1)
                 {
                     content.AgeInDays += days;
+                    content.LastAgeUpdate = DateTime.Now.Date;
                     _context.SaveChanges();
                 }
                 return content.AgeInDays;
@@ -80,7 +81,7 @@ namespace ChicksAppNew.Controllers
                         TotalCurrentChicksNum = stock.addedChicksNum,
                         TotalDeadChicksNum = 0,
                         TotalInitialChicksNum= stock.addedChicksNum,
-                        LastAgeUpdate = DateTime.Now
+                        LastAgeUpdate = DateTime.Now.Date
                     };
                     _context.Add(newStock);
 
