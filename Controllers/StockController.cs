@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace ChicksAppNew.Controllers
 {
-    
+
     public class StockController : ControllerBase
     {
         private readonly DataContext _context;
@@ -20,7 +20,14 @@ namespace ChicksAppNew.Controllers
         [HttpGet]
         public StockContentVM GetStockContent()
         {
-            var content = _context.GeneralStocks.Select(x => new StockContentVM { TotalChicksNum = x.TotalInitialChicksNum, CurrentChicksNum = x.TotalCurrentChicksNum, AvailableFoodQuantity = x.TotalFoodQuantity, AvailableWoodDust = x.TotalWoodDustQuantity }).FirstOrDefault();
+            var content = _context.GeneralStocks.Select(x => new StockContentVM 
+            { 
+            TotalChicksNum = x.TotalInitialChicksNum, 
+            CurrentChicksNum = x.TotalCurrentChicksNum, 
+            AvailableFoodQuantity = x.TotalFoodQuantity, 
+            AvailableWoodDust = x.TotalWoodDustQuantity,
+            CurrentAge = x.AgeInDays
+            }).FirstOrDefault();
             return content;
         }
 
@@ -28,7 +35,7 @@ namespace ChicksAppNew.Controllers
         public int updateAge()
         {
             var content = _context.GeneralStocks.FirstOrDefault();
-            if(content !=null)
+            if (content != null)
             {
                 var days = Convert.ToInt32(Math.Floor((DateTime.Now.Date - content.LastAgeUpdate.Date).TotalDays));
                 if (days > 1)
@@ -40,7 +47,7 @@ namespace ChicksAppNew.Controllers
                 return content.AgeInDays;
             }
             else { return 0; }
-            
+
         }
 
         [HttpPost]
@@ -53,9 +60,9 @@ namespace ChicksAppNew.Controllers
             var result = "";
             try
             {
-                
+
                 var currentStock = _context.GeneralStocks.FirstOrDefault();
-                if(currentStock != null)
+                if (currentStock != null)
                 {
                     currentStock.TotalFoodQuantity = stock.addedFoodQuantity + currentStock.TotalFoodQuantity;
                     currentStock.CurrentFoodQuantity = currentStock.CurrentFoodQuantity + stock.addedFoodQuantity;
@@ -70,28 +77,29 @@ namespace ChicksAppNew.Controllers
                         return "يرجي ادخال عدد الكتاكيت الابتدائي";
                     if (stock.AgeInDays == 0)
                         return "يرجي ادخال عمر الكتاكيت الابتدائي";
-                    var newStock = new GeneralStock { 
-                    
-                        ID=0,
-                        CurrentFoodQuantity= stock.addedFoodQuantity,
+                    var newStock = new GeneralStock
+                    {
+
+                        ID = 0,
+                        CurrentFoodQuantity = stock.addedFoodQuantity,
                         CurrentWoodDustQuantity = stock.addedWoodDustQuantity,
                         TotalFoodQuantity = stock.addedFoodQuantity,
                         TotalWoodDustQuantity = stock.addedWoodDustQuantity,
                         AgeInDays = stock.AgeInDays,
                         TotalCurrentChicksNum = stock.addedChicksNum,
                         TotalDeadChicksNum = 0,
-                        TotalInitialChicksNum= stock.addedChicksNum,
+                        TotalInitialChicksNum = stock.addedChicksNum,
                         LastAgeUpdate = DateTime.Now.Date
                     };
                     _context.Add(newStock);
 
                 }
                 var todayInsertOp = _context.StockInsertionOperations.FirstOrDefault(x => x.InsertDate.Date == DateTime.Now.Date);
-                if(todayInsertOp != null)
+                if (todayInsertOp != null)
                 {
-                    todayInsertOp.AddedChicksNum = todayInsertOp.AddedChicksNum+stock.addedChicksNum;
-                    todayInsertOp.AddedFoodQuantity = todayInsertOp.AddedFoodQuantity+stock.addedFoodQuantity;
-                    todayInsertOp.AddedWoodDustQuantity = todayInsertOp.AddedWoodDustQuantity+stock.addedWoodDustQuantity;
+                    todayInsertOp.AddedChicksNum = todayInsertOp.AddedChicksNum + stock.addedChicksNum;
+                    todayInsertOp.AddedFoodQuantity = todayInsertOp.AddedFoodQuantity + stock.addedFoodQuantity;
+                    todayInsertOp.AddedWoodDustQuantity = todayInsertOp.AddedWoodDustQuantity + stock.addedWoodDustQuantity;
                 }
                 else
                 {
@@ -105,7 +113,7 @@ namespace ChicksAppNew.Controllers
                     };
                     _context.StockInsertionOperations.Add(stockInsertOperation);
                 }
-               
+
                 _context.SaveChanges();
             }
             catch (Exception e)

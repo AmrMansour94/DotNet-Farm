@@ -15,7 +15,7 @@ namespace ChicksApp.Domain
         public int DeadChicks { get; set; }
         public int CurrentNumOfChicks { get; set; }
         public decimal ConsumedFoodQuantity { get; set; }
-        public decimal ConsumedWoodDust { get; set; }
+        public int ConsumedWoodDust { get; set; }
         public int AgeInDays { get; set; }
         public decimal DeathRatio { get; set; }
 

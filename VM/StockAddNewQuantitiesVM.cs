@@ -10,7 +10,7 @@ namespace ChicksAppNew.VM
 
         public int addedChicksNum { get; set; }
         public decimal addedFoodQuantity { get; set; }
-        public decimal addedWoodDustQuantity { get; set; }
+        public int addedWoodDustQuantity { get; set; }
         public int AgeInDays { get; set; }
 
     }

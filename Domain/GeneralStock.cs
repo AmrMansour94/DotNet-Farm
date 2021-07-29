@@ -13,8 +13,8 @@ namespace ChicksApp.Domain
         public int TotalCurrentChicksNum { get; set; }
         public decimal TotalFoodQuantity { get; set; }
         public decimal CurrentFoodQuantity { get; set; }
-        public decimal TotalWoodDustQuantity { get; set; }
-        public decimal CurrentWoodDustQuantity { get; set; }
+        public int TotalWoodDustQuantity { get; set; }
+        public int CurrentWoodDustQuantity { get; set; }
         public int AgeInDays { get; set; }
         public DateTime LastAgeUpdate { get; set; }
     }

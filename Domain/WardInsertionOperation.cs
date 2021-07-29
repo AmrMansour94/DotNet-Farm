@@ -20,8 +20,10 @@ namespace ChicksApp.Domain
         public decimal ConversionFactor { get; set; }
         public int Age { get; set; }
         public decimal TotalFoodQuantity { get; set; }
-        public decimal TotalWoodDust { get; set; }
+        public int TotalWoodDust { get; set; }
         public int TotalNumOfChicks { get; set; }
+        public decimal TotalFoodCost { get; set; }
+        public decimal TotalWoodDustCost { get; set; }
         public virtual Ward Ward { get; set; }
 
     }

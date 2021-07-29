@@ -4,18 +4,16 @@ import { StockContentVM } from "../../../VM/StockVM";
 
 const StockContent = () => {
   const [StockContent, setStockContent] = useState<StockContentVM>();
-  
-  useEffect(() => {
-  onload();
-  }, [])
-  useEffect(() => {
 
-    }, [StockContent])
+  useEffect(() => {
+    onload();
+  }, []);
+  useEffect(() => {}, [StockContent]);
 
-  const onload =async ()=>{
-    const data = await StockApi.getStockContent()
-    setStockContent(data)
-  }
+  const onload = async () => {
+    const data = await StockApi.getStockContent();
+    setStockContent(data);
+  };
 
   return (
     <>
@@ -32,6 +30,18 @@ const StockContent = () => {
           }}
         >
           محتويات المخزن
+        </span>
+      </div>
+
+      <div className="row justify-content-center" style={{ margin: "20px" }}>
+        <span
+          style={{
+            textShadow: "4px 4px 8px #f2cfff",
+            fontWeight: 900,
+            fontSize: "145%",
+          }}
+        >
+          عمر الكتاكيت الحالي {StockContent?.currentAge} يوم
         </span>
       </div>
       <div className="row" style={{ margin: "20px", direction: "rtl" }}>
@@ -52,7 +62,7 @@ const StockContent = () => {
               textShadow: "4px 4px 8px #f2cfff",
               fontWeight: 900,
               fontSize: "125%",
-              float:"right"
+              float: "right",
             }}
           >
             {StockContent?.totalChicksNum}
@@ -75,14 +85,14 @@ const StockContent = () => {
               textShadow: "4px 4px 8px #f2cfff",
               fontWeight: 900,
               fontSize: "125%",
-              float:"right"
+              float: "right",
             }}
           >
             {StockContent?.currentChicksNum}
           </span>
         </div>
-        </div>
-        <div className="row" style={{ margin: "20px", direction: "rtl" }}>
+      </div>
+      <div className="row" style={{ margin: "20px", direction: "rtl" }}>
         <div className="col-md-3">
           <span
             style={{
@@ -100,7 +110,7 @@ const StockContent = () => {
               textShadow: "4px 4px 8px #f2cfff",
               fontWeight: 900,
               fontSize: "125%",
-              float:"right"
+              float: "right",
             }}
           >
             {StockContent?.availableFoodQuantity} كجم
@@ -125,7 +135,7 @@ const StockContent = () => {
               textShadow: "4px 4px 8px #f2cfff",
               fontWeight: 900,
               fontSize: "125%",
-              float:"right"
+              float: "right",
             }}
           >
             {StockContent?.availableWoodDust} كجم

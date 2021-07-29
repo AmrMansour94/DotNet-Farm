@@ -12,11 +12,10 @@ namespace ChicksAppNew.Domain
         public int ID { get; set; }
         public string BandName { get; set; }
         public decimal Value { get; set; }
-        public DateTime Date { get; set; }
-        [ForeignKey("Ward")]
-        public int? WardID { get; set; }
+        public DateTime ExpenseDate { get; set; }
+        [ForeignKey("Employee")]
+        public int? EmployeeID { get; set; }
 
-
-        public virtual Ward Ward { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

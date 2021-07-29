@@ -14,12 +14,14 @@ namespace ChicksApp.Context
         {
         }
 
-       public DbSet<Ward> Wards { get; set; }
+        public DbSet<Ward> Wards { get; set; }
         public DbSet<WardsStock> WardsStocks { get; set; }
         public DbSet<GeneralStock> GeneralStocks { get; set; }
         public DbSet<StockInsertionOperation> StockInsertionOperations { get; set; }
         public DbSet<WardInsertionOperation> WardInsertionOperations { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<GeneralExpenses> GeneralExpenses { get; set; }
+        public DbSet<FoodAndDustUnitCost> FoodAndDustUnitCost { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }
