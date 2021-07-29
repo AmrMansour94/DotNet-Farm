@@ -29,7 +29,7 @@ namespace ChicksAppNew.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BandName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
                     WardID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

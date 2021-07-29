@@ -16,10 +16,10 @@ namespace ChicksAppNew.Migrations
                     TotalInitialChicksNum = table.Column<int>(type: "int", nullable: false),
                     TotalDeadChicksNum = table.Column<int>(type: "int", nullable: false),
                     TotalCurrentChicksNum = table.Column<int>(type: "int", nullable: false),
-                    TotalFoodQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CurrentFoodQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalWoodDustQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CurrentWoodDustQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    TotalFoodQuantity = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
+                    CurrentFoodQuantity = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
+                    TotalWoodDustQuantity = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
+                    CurrentWoodDustQuantity = table.Column<decimal>(type: "decimal(18,3)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,7 @@ namespace ChicksAppNew.Migrations
                     AddedChicksNum = table.Column<int>(type: "int", nullable: false),
                     AddedFoodQuantity = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
                     AddedWoodDustQuantity = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
-                    InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    InsertDate = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,7 +66,7 @@ namespace ChicksAppNew.Migrations
                     DeadChicksNum = table.Column<int>(type: "int", nullable: false),
                     ConsumedFoodQuantityPerDay = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
                     ConsumedWoodDustQuantityPerDay = table.Column<decimal>(type: "decimal(18,3)", nullable: false),
-                    InsertionDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    InsertionDate = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
