@@ -13,7 +13,6 @@ namespace ChicksAppNew.Domain
         public int MedicineID { get; set; }
         public decimal StockQuantity { get; set; }
         public decimal StockCurrentMedicineValue { get; set; }
-
         public virtual MedicineDetails MedicineDetails { get; set; }
     }
 }

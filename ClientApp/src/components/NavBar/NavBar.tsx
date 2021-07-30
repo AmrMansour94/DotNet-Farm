@@ -16,6 +16,8 @@ import StockMainContainer from "../App/Stock/StockMainContainer";
 import Expenses from "../App/Expenses/Expenses";
 import ReportsMainContainer from "../App/Reports/ReportsMainContainer";
 import MedicineMainContainer from "../App/Medicine/MedicineMainContainer";
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import EmployeesContainer from "../App/Employees/EmployeesContainer";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -95,35 +97,42 @@ export default function TabBar() {
             aria-label="phone"
             {...a11yProps(0)}
             label="تهيئة المخزن"
-            style={{ width: 220 }}
+            style={{ width: 180 }}
           />
           <Tab
             icon={<TocOutlinedIcon />}
             aria-label="favorite"
             {...a11yProps(1)}
             label="تهيئة العنابر"
-            style={{ width: 220 }}
+            style={{ width: 180 }}
           />
           <Tab
             icon={<AttachMoneyOutlinedIcon />}
             aria-label="person"
             {...a11yProps(2)}
             label="مصروفات اضافية"
-            style={{ width: 220 }}
+            style={{ width: 180 }}
           />
           <Tab
             icon={<LocalHospitalIcon />}
             aria-label="help"
             {...a11yProps(3)}
             label="تهيئة الدواء"
-            style={{ width: 220 }}
+            style={{ width: 180 }}
+          />
+          <Tab
+            icon={<AssignmentIndIcon />}
+            aria-label="help"
+            {...a11yProps(4)}
+            label="تهيئة الموظفين"
+            style={{ width: 180 }}
           />
           <Tab
             icon={<AssessmentOutlinedIcon />}
             aria-label="help"
-            {...a11yProps(4)}
+            {...a11yProps(5)}
             label="التقارير"
-            style={{ width: 220 }}
+            style={{ width: 180 }}
           />
         </Tabs>
       </AppBar>
@@ -140,6 +149,9 @@ export default function TabBar() {
         <MedicineMainContainer />
       </TabPanel>
       <TabPanel value={value} index={4}>
+        <EmployeesContainer />
+      </TabPanel>
+      <TabPanel value={value} index={5}>
         <ReportsMainContainer />
       </TabPanel>
     </div>
