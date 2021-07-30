@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { storeState } from "../../..";
-import { LoginInitialState } from "../../../LoginReducer";
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import Accordion, { Item } from "devextreme-react/accordion";
 
 const AddNewEmployee = () => {
-    const { User } = useSelector<storeState, LoginInitialState>(
-        (state: storeState) => {
-          return {
-            User: state.Login.User,
-          };
-        }
-      );
 
       // التاريخ الافتراضي تاريخ اليوم
   var curr = new Date();
@@ -24,16 +13,6 @@ const AddNewEmployee = () => {
     const [EmploymentDate, setEmploymentDate] = useState<Date>();
     const [PhoneNumber, setPhoneNumber] = useState<string>("");
     const [PlaceOfbirth, setPlaceOfbirth] = useState<string>("");
-
-    const onLoad = async () => {
-        if (!User) {
-          window.location.href = "/Login";
-        }
-      };
-
-      useEffect(() => {
-        onLoad();
-      }, []);
 
       useEffect(() => {}, [
         EmployeeName,
