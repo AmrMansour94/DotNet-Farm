@@ -12,5 +12,6 @@ namespace ChicksAppNew.Domain
         public string CompanyName { get; set; }
         public string Unit { get; set; }
         public decimal UnitCost { get; set; }
+        public string Notes { get; set; }
     }
 }

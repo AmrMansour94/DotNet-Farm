@@ -84,10 +84,10 @@ const InsertMedicineIntoWards = () => {
         }}
       >
         <option>--</option>
-        {MedicineList.map((emp: MedicineVM) => {
+        {MedicineList.map((Med: MedicineVM) => {
           return (
-            <option key={emp.iD} accessKey={String(emp.iD)}>
-              {emp.name}
+            <option title={Med.notes} key={Med.iD} accessKey={String(Med.iD)}>
+              {Med.name}
             </option>
           );
         })}

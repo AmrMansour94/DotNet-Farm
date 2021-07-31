@@ -38,7 +38,7 @@ namespace ChicksAppNew.Controllers
             if (content != null)
             {
                 var days = Convert.ToInt32(Math.Floor((DateTime.Now.Date - content.LastAgeUpdate.Date).TotalDays));
-                if (days > 1)
+                if (days >= 1)
                 {
                     content.AgeInDays += days;
                     content.LastAgeUpdate = DateTime.Now.Date;

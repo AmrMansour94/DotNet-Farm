@@ -118,7 +118,7 @@ const WardsContainer = () => {
                   <option>--</option>
                   {wardsList.map((ward: IKeyValuePairsVM) => {
                     return (
-                      <option key={ward.ID} accessKey={String(ward.ID)}>
+                      <option title={ward.Name} key={ward.ID} accessKey={String(ward.ID)}>
                         {ward.Name}
                       </option>
                     );

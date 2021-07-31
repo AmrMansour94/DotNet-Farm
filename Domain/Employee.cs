@@ -9,8 +9,8 @@ namespace ChicksAppNew.Domain
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public DateTime EmploymentDate { get; set; }
-        public DateTime UnEmploymentDate { get; set; }
+        public DateTime? EmploymentDate { get; set; }
+        public DateTime? UnEmploymentDate { get; set; }
         public string PhoneNumber { get; set; }
         public bool IsActive { get; set; }
 

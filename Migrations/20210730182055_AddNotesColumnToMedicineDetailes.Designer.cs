@@ -4,14 +4,16 @@ using ChicksApp.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChicksAppNew.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210730182055_AddNotesColumnToMedicineDetailes")]
+    partial class AddNotesColumnToMedicineDetailes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,7 +200,7 @@ namespace ChicksAppNew.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("EmploymentDate")
+                    b.Property<DateTime>("EmploymentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -210,7 +212,7 @@ namespace ChicksAppNew.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UnEmploymentDate")
+                    b.Property<DateTime>("UnEmploymentDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
@@ -262,56 +264,6 @@ namespace ChicksAppNew.Migrations
                     b.ToTable("GeneralExpenses");
                 });
 
-            modelBuilder.Entity("ChicksAppNew.Domain.MedicineDetails", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Unit")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("UnitCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("MedicineDetails");
-                });
-
-            modelBuilder.Entity("ChicksAppNew.Domain.MedicineStock", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("MedicineID")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("StockCurrentMedicineValue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("StockQuantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("MedicineID");
-
-                    b.ToTable("MedicineStock");
-                });
-
             modelBuilder.Entity("ChicksAppNew.Domain.User", b =>
                 {
                     b.Property<int>("ID")
@@ -328,37 +280,6 @@ namespace ChicksAppNew.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("ChicksAppNew.Domain.WardsMedicineConsumption", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("ConsumptionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MedicineID")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("WardID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("MedicineID");
-
-                    b.HasIndex("WardID");
-
-                    b.ToTable("WardsMedicineConsumptions");
                 });
 
             modelBuilder.Entity("ChicksApp.Domain.WardInsertionOperation", b =>
@@ -390,36 +311,6 @@ namespace ChicksAppNew.Migrations
                         .HasForeignKey("EmployeeID");
 
                     b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("ChicksAppNew.Domain.MedicineStock", b =>
-                {
-                    b.HasOne("ChicksAppNew.Domain.MedicineDetails", "MedicineDetails")
-                        .WithMany()
-                        .HasForeignKey("MedicineID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MedicineDetails");
-                });
-
-            modelBuilder.Entity("ChicksAppNew.Domain.WardsMedicineConsumption", b =>
-                {
-                    b.HasOne("ChicksAppNew.Domain.MedicineDetails", "MedicineDetails")
-                        .WithMany()
-                        .HasForeignKey("MedicineID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ChicksApp.Domain.Ward", "Ward")
-                        .WithMany()
-                        .HasForeignKey("WardID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MedicineDetails");
-
-                    b.Navigation("Ward");
                 });
 #pragma warning restore 612, 618
         }

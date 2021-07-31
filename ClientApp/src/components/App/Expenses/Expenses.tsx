@@ -16,8 +16,8 @@ const Expenses = () => {
 
 
   async function onload() {
-    const data = await FarmServices.GetEmployees();
-    setEmployeesList(data);
+    // const data = await FarmServices.GetEmployees();
+    // setEmployeesList(data);
   }
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const Expenses = () => {
     className="form-control selectpicker"
     data-style="btn btn-link"
     id="exampleFormControlSelect1"
+    dir="rtl"
     onChange={(e: any) => {
       setSelectedEmpName(e.target.value);
     }}
@@ -58,7 +59,7 @@ const Expenses = () => {
     <option>--</option>
     {EmployeesList.map((emp: EmployeesVM) => {
       return (
-        <option key={emp.iD} accessKey={String(emp.iD)}>
+        <option title={emp.name} key={emp.iD} accessKey={String(emp.iD)}>
           {emp.name}
         </option>
       );
