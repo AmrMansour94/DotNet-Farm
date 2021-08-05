@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { storeState } from "../../..";
 import { LoginInitialState } from "../../../LoginReducer";
+import AddMedicineQuantitiesToStock from "./AddMedicineQuantitiesToStock";
 import AddNewMedicine from "./AddNewMedicine";
 import InsertMedicineIntoWards from "./InsertMedicineIntoWards";
 
@@ -45,8 +46,11 @@ const MedicineMainContainer = () => {
             animationDuration={300}
             style={{ margin: 50 }}
           >
-            <Item title="اضافة دواء جديد">
+            <Item title="ادخال دواء جديد">
               <AddNewMedicine />
+            </Item>
+            <Item title="اضافة كميات دواء للمخزن">
+            <AddMedicineQuantitiesToStock />
             </Item>
             <Item title="ادخال الدواء للعنابر">
               <InsertMedicineIntoWards />

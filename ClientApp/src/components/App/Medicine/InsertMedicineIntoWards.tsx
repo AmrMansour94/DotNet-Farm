@@ -50,7 +50,7 @@ const InsertMedicineIntoWards = () => {
   useEffect(() => {
     for (const med of MedicineList) {
       if (med.name == selectedMedicineName) {
-        setSelectedMedicineID(med.iD);
+        setSelectedMedicineID(med.id);
         break;
       } else {
         setSelectedMedicineID(0);
@@ -86,7 +86,7 @@ const InsertMedicineIntoWards = () => {
         <option>--</option>
         {MedicineList.map((Med: MedicineVM) => {
           return (
-            <option title={Med.notes} key={Med.iD} accessKey={String(Med.iD)}>
+            <option title={Med.notes} key={Med.id} accessKey={String(Med.id)}>
               {Med.name}
             </option>
           );

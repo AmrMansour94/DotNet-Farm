@@ -1,5 +1,5 @@
 export interface MedicineVM {
-  iD: number;
+  id: number;
   name: string;
   companyName: string;
   unit: string;
@@ -8,10 +8,29 @@ export interface MedicineVM {
 }
 
 export interface MedicineSaveVM {
-    ID: number;
-    Name: string;
-    CompanyName: string;
-    Unit: string;
-    UnitCost: number;
-    Notes: string;
-  }
+  ID: number;
+  Name: string;
+  CompanyName: string;
+  Unit: string;
+  UnitCost: number;
+  Notes: string;
+}
+
+export interface SelectedMedicineDetails {
+  medicineDetails: MedicineVM;
+  medicineStock: MedicineStock;
+}
+export interface MedicineStock {
+  id: number;
+  medicineID: number;
+  stockQuantity: number;
+  stockCurrentMedicineValue: number;
+}
+
+export interface MedicineStockSaveVM {
+  ID: number;
+  MedicineID: number;
+  StockQuantity: number;
+  StockCurrentMedicineValue: number;
+}
+

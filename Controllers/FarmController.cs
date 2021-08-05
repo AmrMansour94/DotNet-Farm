@@ -103,7 +103,7 @@ namespace ChicksAppNew.Controllers
         }
 
         [HttpPost]
-        public string AddNewMedicine(MedicineDetails Details)
+        public string AddNewMedicine([FromForm] MedicineDetails Details)
         {
             if (string.IsNullOrWhiteSpace(Details.Name.Trim()))
                 return "يرجي ادخال اسم الدواء";
@@ -111,7 +111,7 @@ namespace ChicksAppNew.Controllers
             if (string.IsNullOrWhiteSpace(Details.Unit.Trim()))
                 return "يرجي ادخال اسم الوحدة";
 
-            if ((Details.UnitCost! > 0))
+            if (!(Details.UnitCost > 0))
                 return "يرجي ادخال تكلفة الوحدة";
 
             var empExist = _context.MedicineDetails.Where(x => x.Name.Trim() == Details.Name.Trim()).FirstOrDefault();
@@ -139,7 +139,7 @@ namespace ChicksAppNew.Controllers
         }
 
         [HttpPost]
-        public string AddMedicineStock(MedicineStock Details)
+        public string AddMedicineStock([FromForm] MedicineStock Details)
         {
             if (Details.MedicineID! > 0)
                 return "يرجي اختيار اسم الدواء";

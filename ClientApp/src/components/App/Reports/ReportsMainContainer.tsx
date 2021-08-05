@@ -62,10 +62,8 @@ const ReportsMainContainer = () => {
         </div>
       </div>
 
-      <div className="card-body" hidden={isHidden}>
-        <div className="card">
+      <div className="card-body" hidden={isHidden} style = {{marginTop : "-50px"}}>
           <WardsReport selectedReport={selectedReport}/>
-        </div>
       </div>
     </div>
   );

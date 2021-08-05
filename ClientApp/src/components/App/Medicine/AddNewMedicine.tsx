@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
+import { FarmServices } from "../../../Services/FarmServices";
+import { MedicineSaveVM } from "../../../VM/MedicineVM";
+import Swal from "sweetalert2";
+import UINotify from "../../UINotify/UINotify";
 
 const AddNewMedicine = () => {
   const [MedicineName, setMedicineName] = useState<string>("");
@@ -16,7 +20,37 @@ const AddNewMedicine = () => {
 
   useEffect(() => {}, [MedicineName, CompanyName, UnitType, UnitPrice, Notes]);
 
-  function onSaveClick() {}
+  async function onSaveClick() {
+    let newMedicine: MedicineSaveVM = {
+      ID: 0,
+      Name: MedicineName,
+      CompanyName: CompanyName,
+      Unit: UnitType,
+      UnitCost: UnitPrice,
+      Notes: Notes,
+    };
+    if (!newMedicine.Name) UINotify.error("يرجي ادخال اسم الدواء");
+    else if (!newMedicine.Unit) UINotify.error("يرجي ادخال الوحدة ");
+    else if (!newMedicine.UnitCost)
+      UINotify.error("يرجي ادخال تكلفة الوحدة للدواء ");
+    else {
+      const res = await FarmServices.SaveNewMedicine(newMedicine);
+
+      if (res == "")
+        Swal.fire({
+          icon: "success",
+          title: "تم الحفظ بنجاح",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      else
+        Swal.fire({
+          icon: "error",
+          title: "عذرا",
+          text: res,
+        });
+    }
+  }
 
   return (
     <>
