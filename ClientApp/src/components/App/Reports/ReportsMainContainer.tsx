@@ -3,10 +3,12 @@ import { IKeyValuePairsVM } from "../../../VM/KeyValuePairs";
 import WardsReport from "./WardsReport";
 
 const ReportsList: IKeyValuePairsVM[] = [
-  { ID: 1, Name: "--" },
-  { ID: 2, Name: "تقرير المخازن" },
-  { ID: 3, Name: "تقرير العنابر" },
-  { ID: 4, Name: "تقرير المصروفات المالية اليومية" },
+  { ID: 0, Name: "--" },
+  { ID: 1, Name: "تقرير العنابر" },
+  { ID: 2, Name: "تقرير المخزن" },
+  { ID: 3, Name: "المدفوعات اليومية"},
+  { ID: 4, Name: "استهلاك الدواء للعنابر" },
+  { ID: 5, Name: "الكميات المتبقية من الدواء" },
 ];
 
 const ReportsMainContainer = () => {

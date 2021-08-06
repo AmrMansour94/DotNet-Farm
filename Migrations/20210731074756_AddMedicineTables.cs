@@ -10,7 +10,7 @@ namespace ChicksAppNew.Migrations
             migrationBuilder.AlterColumn<DateTime>(
                 name: "UnEmploymentDate",
                 table: "Employees",
-                type: "datetime2",
+                type: "Date",
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");
@@ -18,7 +18,7 @@ namespace ChicksAppNew.Migrations
             migrationBuilder.AlterColumn<DateTime>(
                 name: "EmploymentDate",
                 table: "Employees",
-                type: "datetime2",
+                type: "Date",
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");

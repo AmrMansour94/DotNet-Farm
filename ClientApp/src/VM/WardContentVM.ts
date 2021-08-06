@@ -28,4 +28,6 @@ export interface wardDailyReportVM {
      totalFoodQuantity :number
      totalWoodDust :number
      TotalNumOfChicks : number
+     totalFoodCost :number
+     totalWoodDustCost : number
 }

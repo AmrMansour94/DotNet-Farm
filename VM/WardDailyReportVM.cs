@@ -21,6 +21,8 @@ namespace ChicksAppNew.VM
         public int age { get; set; }
         public decimal totalFoodQuantity { get; set; }
         public decimal totalWoodDust { get; set; }
-        public int TotalNumOfChicks { get; set; }
+        public int totalNumOfChicks { get; set; }
+        public decimal totalFoodCost { get; set; }
+        public decimal totalWoodDustCost { get; set; }
     }
 }

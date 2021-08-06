@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import PaymentIcon from '@material-ui/icons/Payment';
+import PaymentIcon from "@material-ui/icons/Payment";
 import { FarmServices } from "../../../Services/FarmServices";
 import { EmployeesVM } from "../../../VM/EmployeesVM";
 
@@ -15,7 +15,6 @@ const Expenses = () => {
   const [costValue, setCostValue] = useState<number>(0);
   const [addDate, setAddDate] = useState<string>(new Date().toISOString());
 
-
   async function onload() {
     // const data = await FarmServices.GetEmployees();
     // setEmployeesList(data);
@@ -25,7 +24,7 @@ const Expenses = () => {
     onload();
   }, []);
 
-  useEffect(() => {}, [EmployeesList , selectedEmpID]);
+  useEffect(() => {}, [EmployeesList, selectedEmpID]);
   useEffect(() => {
     debugger;
     for (const emp of EmployeesList) {
@@ -38,35 +37,34 @@ const Expenses = () => {
     }
   }, [selectedEmpName]);
 
-  function onSaveClick() {
-
-  }
-
+  function onSaveClick() {}
 
   const employees = useMemo(() => {
-    return <select
-    className="form-control selectpicker"
-    data-style="btn btn-link"
-    id="exampleFormControlSelect1"
-    dir="rtl"
-    onChange={(e: any) => {
-      setSelectedEmpName(e.target.value);
-    }}
-    style={{
-      fontWeight: 900,
-      fontSize: "125%",
-    }}
-  >
-    <option>--</option>
-    {EmployeesList.map((emp: EmployeesVM) => {
-      return (
-        <option title={emp.name} key={emp.iD} accessKey={String(emp.iD)}>
-          {emp.name}
-        </option>
-      );
-    })}
-  </select>
-   }, [EmployeesList]);
+    return (
+      <select
+        className="form-control selectpicker"
+        data-style="btn btn-link"
+        id="exampleFormControlSelect1"
+        dir="rtl"
+        onChange={(e: any) => {
+          setSelectedEmpName(e.target.value);
+        }}
+        style={{
+          fontWeight: 900,
+          fontSize: "125%",
+        }}
+      >
+        <option>--</option>
+        {EmployeesList.map((emp: EmployeesVM) => {
+          return (
+            <option title={emp.name} key={emp.iD} accessKey={String(emp.iD)}>
+              {emp.name}
+            </option>
+          );
+        })}
+      </select>
+    );
+  }, [EmployeesList]);
   return (
     <div className="card">
       <div className="card-header card-header-text card-header-primary">
@@ -167,7 +165,7 @@ const Expenses = () => {
           <div className="row" style={{ margin: "20px" }}>
             <div className="col-md-2"></div>
             <div className="col-md-6">
-            <input
+              <input
                 type="date"
                 className="form-control"
                 placeholder="تاريخ الصرف..."
@@ -200,9 +198,7 @@ const Expenses = () => {
 
           <div className="row" style={{ margin: "20px" }}>
             <div className="col-md-2"></div>
-            <div className="col-md-6">
-            {employees}
-            </div>
+            <div className="col-md-6">{employees}</div>
 
             <div className="col-md-3">
               <span
@@ -219,31 +215,29 @@ const Expenses = () => {
             <div className="col-md-1"></div>
           </div>
 
-         
-
           <div className="row" style={{ margin: "20px" }}>
-        <div className="col-md-3"></div>
+            <div className="col-md-3"></div>
 
-        <div className="col-md-6">
-          <button
-            className="btn btn-primary btn-round"
-            style={{ alignSelf: "center", width: "100%" }}
-          >
-            <PaymentIcon />{" "}
-            <label
-              style={{
-                color: "white",
-                fontWeight: 900,
-                fontSize: "130%",
-              }}
-            >
-              اضافة الي المصروفات
-            </label>
-          </button>
-        </div>
+            <div className="col-md-6">
+              <button
+                className="btn btn-primary btn-round"
+                style={{ alignSelf: "center", width: "100%" }}
+              >
+                <PaymentIcon />{" "}
+                <label
+                  style={{
+                    color: "white",
+                    fontWeight: 900,
+                    fontSize: "130%",
+                  }}
+                >
+                  اضافة الي المصروفات
+                </label>
+              </button>
+            </div>
 
-        <div className="col-md-3"></div>
-      </div>
+            <div className="col-md-3"></div>
+          </div>
         </div>
       </div>
     </div>
