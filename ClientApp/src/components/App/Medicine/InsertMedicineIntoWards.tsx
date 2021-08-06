@@ -1,17 +1,23 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { storeState } from "../../..";
-import { LoginInitialState } from "../../../LoginReducer";
 import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
-import { MedicineVM } from "../../../VM/MedicineVM";
+import { MedicineVM, SelectedMedicineDetails } from "../../../VM/MedicineVM";
 import { FarmServices } from "../../../Services/FarmServices";
 import { WardsApi } from "../../../Services/WardsServices";
 import { IKeyValuePairsVM } from "../../../VM/KeyValuePairs";
-import { wardDailyReportVM } from "../../../VM/WardContentVM";
+import UINotify from "../../UINotify/UINotify";
+import Swal from "sweetalert2";
+
+export interface addedMedQuantityTOWardSaveModel {
+  ID: number;
+  WardID: number;
+  MedicineID: number;
+  ConsumptionDate: string;
+  Quantity: number;
+  TotalCost: number;
+}
 
 const InsertMedicineIntoWards = () => {
-
-      // التاريخ الافتراضي تاريخ اليوم
+  // التاريخ الافتراضي تاريخ اليوم
   var curr = new Date();
   curr.setDate(curr.getDate());
   var defaultDate = curr.toISOString().substr(0, 10);
@@ -26,14 +32,28 @@ const InsertMedicineIntoWards = () => {
   const [wardsList, setWardsList] = useState<IKeyValuePairsVM[]>([]);
   const [selectedWard, setSelectedWard] = useState<string>();
   const [selectedWardID, setSelectedWardID] = useState<number>(0);
-  const [addDate, setAddDate] = useState<Date>(new Date(defaultDate));
+  const [addDate, setAddDate] = useState<string>(new Date().toISOString());
+  const [isHidden, setIsHidden] = useState<boolean>(true);
+  const [MedicineDetails, setMedicineDetails] =
+    useState<SelectedMedicineDetails>();
 
   const onLoad = async () => {
-    // const medList = await FarmServices.GetMedicineList();
-    // setMedicineList(medList);
+    const medList = await FarmServices.GetMedicineList();
+    setMedicineList(medList);
     const wardsList = await WardsApi.getWardsList();
     setWardsList(wardsList);
   };
+
+  async function GetMedicineDetails(ID: number) {
+    debugger;
+    const data = await FarmServices.GetMedicineDetails(ID);
+    console.log(data);
+    setMedicineDetails(data);
+  }
+
+  useEffect(() => {
+    if (selectedMedicineID) GetMedicineDetails(selectedMedicineID);
+  }, [selectedMedicineID]);
 
   useEffect(() => {
     onLoad();
@@ -45,12 +65,16 @@ const InsertMedicineIntoWards = () => {
     wardsList,
     selectedWardID,
     addedQuantity,
-    addDate
+    addDate,
+    MedicineDetails,
+    isHidden,
   ]);
+
   useEffect(() => {
     for (const med of MedicineList) {
       if (med.name == selectedMedicineName) {
         setSelectedMedicineID(med.id);
+        setIsHidden(false);
         break;
       } else {
         setSelectedMedicineID(0);
@@ -95,6 +119,174 @@ const InsertMedicineIntoWards = () => {
     );
   }, [MedicineList]);
 
+  const medicineDetails = useMemo(() => {
+    return MedicineDetails ? (
+      <div hidden={isHidden}>
+        <div
+          className="row"
+          style={{
+            margin: "20px",
+            direction: "rtl",
+            // border: "1px solid",
+            // borderRadius: "5px",
+            // borderColor: "wheat",
+            // height: "30px",
+          }}
+        >
+          <div className="col-md-4">
+            <span
+              style={{
+                textShadow: "4px 4px 8px #f2cfff",
+                fontWeight: 900,
+                fontSize: "125%",
+                float: "right",
+              }}
+            >
+              اسم الدواء:
+            </span>
+          </div>
+          <div className="col-md-2">
+            <span
+              style={{
+                textShadow: "4px 4px 8px #f2cfff",
+                fontWeight: 900,
+                fontSize: "125%",
+                float: "right",
+              }}
+            >
+              {MedicineDetails?.medicineDetails.name}
+            </span>
+          </div>
+          <div className="col-md-4">
+            <span
+              style={{
+                textShadow: "4px 4px 8px #f2cfff",
+                fontWeight: 900,
+                fontSize: "125%",
+                float: "right",
+              }}
+            >
+              اسم الشركة:
+            </span>
+          </div>
+          <div className="col-md-2">
+            <span
+              style={{
+                textShadow: "4px 4px 8px #f2cfff",
+                fontWeight: 900,
+                fontSize: "125%",
+                float: "right",
+              }}
+            >
+              {MedicineDetails?.medicineDetails.companyName}
+            </span>
+          </div>
+        </div>
+
+        <div
+          className="row"
+          style={{
+            margin: "20px",
+            direction: "rtl",
+            // border: "1px solid",
+            // borderRadius: "5px",
+            // borderColor: "wheat",
+            // height: "30px",
+          }}
+        >
+          <div className="col-md-4">
+            <span
+              style={{
+                textShadow: "4px 4px 8px #f2cfff",
+                fontWeight: 900,
+                fontSize: "125%",
+                float: "right",
+              }}
+            >
+              الكمية المتاحة في المخزن:
+            </span>
+          </div>
+          <div className="col-md-2">
+            <span
+              style={{
+                textShadow: "4px 4px 8px #f2cfff",
+                fontWeight: 900,
+                fontSize: "125%",
+                float: "right",
+              }}
+            >
+              {MedicineDetails?.medicineStock.stockQuantity}{" "}
+              {MedicineDetails?.medicineDetails.unit}
+            </span>
+          </div>
+          <div className="col-md-4">
+            <span
+              style={{
+                textShadow: "4px 4px 8px #f2cfff",
+                fontWeight: 900,
+                fontSize: "125%",
+                float: "right",
+              }}
+            >
+              قيمة الكمية الحالية:
+            </span>
+          </div>
+          <div className="col-md-2">
+            <span
+              style={{
+                textShadow: "4px 4px 8px #f2cfff",
+                fontWeight: 900,
+                fontSize: "125%",
+                float: "right",
+              }}
+            >
+              {MedicineDetails?.medicineStock.stockCurrentMedicineValue} جنيه
+            </span>
+          </div>
+        </div>
+
+        {MedicineDetails?.medicineDetails.notes ? (
+          <div
+            className="row"
+            style={{
+              margin: "20px",
+              direction: "rtl",
+              //   border: "1px solid",
+              //   borderRadius: "5px",
+              //   borderColor: "wheat",
+              //   height: "30px",
+            }}
+          >
+            <div className="col-md-4">
+              <span
+                style={{
+                  textShadow: "4px 4px 8px #f2cfff",
+                  fontWeight: 900,
+                  fontSize: "125%",
+                  float: "right",
+                }}
+              >
+                تفاصيل الدواء:
+              </span>
+            </div>
+            <div className="col-md-8">
+              <span
+                style={{
+                  textShadow: "4px 4px 8px #f2cfff",
+                  fontWeight: 900,
+                  fontSize: "125%",
+                  float: "right",
+                }}
+              >
+                {MedicineDetails?.medicineDetails.notes}
+              </span>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    ) : null;
+  }, [MedicineDetails, isHidden]);
+
   const wards = useMemo(() => {
     return (
       <select
@@ -121,11 +313,52 @@ const InsertMedicineIntoWards = () => {
     );
   }, [wardsList]);
 
-  function onSaveClick() {}
+  async function onSaveClick() {
+    if (!selectedMedicineID) {
+      UINotify.error("يرجي اختيار نوع الدواء");
+    } else if (!selectedWardID) {
+      UINotify.error("يرجي اختيار العنبر");
+    } else if (!addedQuantity) {
+      UINotify.error("يرجي ادخال الكمية المضافة");
+    } else if (
+      MedicineDetails &&
+      addedQuantity > MedicineDetails?.medicineStock.stockQuantity
+    ) {
+      UINotify.error("الكمية المضافة اكبر من الكمية المتاحة حاليا في المخزن");
+    } else {
+      let saveVM: addedMedQuantityTOWardSaveModel = {
+        ID: 0,
+        MedicineID: selectedMedicineID,
+        WardID: selectedWardID,
+        ConsumptionDate: addDate,
+        Quantity: addedQuantity,
+        TotalCost: 0,
+      };
+      debugger
+      const res = await FarmServices.AddMedicineToWards(saveVM);
+      if (res == "") {
+        Swal.fire({
+          icon: "success",
+          title: "تم الحفظ بنجاح",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        GetMedicineDetails(selectedMedicineID);
+      } else {
+        debugger;
+        Swal.fire({
+          icon: "error",
+          title: "عذرا",
+          text: res,
+        });
+      }
+    }
+  }
 
   return (
     <>
       <div className="card-body">
+        {medicineDetails}
         <div className="card">
           <div className="row" style={{ margin: "20px", direction: "rtl" }}>
             <div className="col-md-2"></div>
@@ -156,11 +389,8 @@ const InsertMedicineIntoWards = () => {
                 اسم العنبر :
               </span>
             </div>
-            <div className="col-md-6">
-              {wards}
-            </div>
+            <div className="col-md-6">{wards}</div>
           </div>
-
 
           <div className="row" style={{ margin: "20px", direction: "rtl" }}>
             <div className="col-md-2"></div>
@@ -176,7 +406,7 @@ const InsertMedicineIntoWards = () => {
               </span>
             </div>
             <div className="col-md-6">
-            <input
+              <input
                 type="number"
                 className="form-control"
                 placeholder="الكمية المضافة..."
@@ -184,8 +414,8 @@ const InsertMedicineIntoWards = () => {
                 step={0.01}
                 dir="rtl"
                 onChange={(e: any) => {
-                    setAddedQuantity(Number(e.target.value));
-                  }}
+                  setAddedQuantity(Number(e.target.value));
+                }}
                 style={{
                   fontWeight: 900,
                   fontSize: "125%",
@@ -208,15 +438,15 @@ const InsertMedicineIntoWards = () => {
               </span>
             </div>
             <div className="col-md-6">
-            <input
+              <input
                 type="date"
                 className="form-control"
                 placeholder="تاريخ الاضافة..."
                 defaultValue={defaultDate}
                 onChange={(e: any) => {
-                    setAddDate(new Date(e.target.value));
-                    console.log(new Date(e.target.value))
-                  }}
+                  setAddDate(new Date(e.target.value).toISOString());
+                  console.log(new Date(e.target.value).toISOString());
+                }}
                 dir="rtl"
                 style={{
                   fontWeight: 900,
@@ -225,9 +455,6 @@ const InsertMedicineIntoWards = () => {
               />
             </div>
           </div>
-
-
-
         </div>
       </div>
 

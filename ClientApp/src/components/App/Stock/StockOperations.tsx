@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { WardsApi } from "../../../Services/WardsServices";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
-import { useSelector, useDispatch } from "react-redux";
-import { storeState } from "../../..";
-import { LoginInitialState, LoginDispatcher } from "../../../LoginReducer";
 import Swal from "sweetalert2";
 import { StockApi } from "../../../Services/StockServices";
 import { SaveNewQuantitiesVM } from "../../../VM/StockVM";
 
 const StockOperations = () => {
-  const { User } = useSelector<storeState, LoginInitialState>(
-    (state: storeState) => {
-      return {
-        User: state.Login.User,
-      };
-    }
-  );
-  const dispatch = useDispatch();
-  const rootDispatcher = new LoginDispatcher(dispatch);
-
   const [addedChicksNumber, setAddedChicksNumber] = useState<number>(0);
   const [addedFoodQuantity, setAddedFoodQuantity] = useState<number>(0);
   const [addedWoodDustQuantity, setAddedWoodDustQuantity] = useState<number>(0);
@@ -26,9 +12,7 @@ const StockOperations = () => {
   const [IsDisabled, setIsDisabled] = useState<boolean>(true);
 
   const onLoad = async () => {
-    if (!User) {
-      window.location.href = "/Login";
-    }
+
   };
 
   useEffect(() => {

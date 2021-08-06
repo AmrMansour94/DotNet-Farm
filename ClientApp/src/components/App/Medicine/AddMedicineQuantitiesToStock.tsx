@@ -1,14 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { storeState } from "../../..";
-import { LoginInitialState } from "../../../LoginReducer";
 import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import { MedicineVM, SelectedMedicineDetails } from "../../../VM/MedicineVM";
 import { FarmServices } from "../../../Services/FarmServices";
-import { WardsApi } from "../../../Services/WardsServices";
-import { IKeyValuePairsVM } from "../../../VM/KeyValuePairs";
-import { wardDailyReportVM } from "../../../VM/WardContentVM";
-import { Height } from "devextreme-react/chart";
+import UINotify from "../../UINotify/UINotify";
+import Swal from "sweetalert2";
+
+export interface MedicineStockSaveVM {
+  ID: number;
+  MedicineID: number;
+  StockQuantity: number;
+  StockCurrentMedicineValue: number;
+}
 
 const AddMedicineQuantitiesToStock = () => {
   // التاريخ الافتراضي تاريخ اليوم
@@ -16,9 +18,6 @@ const AddMedicineQuantitiesToStock = () => {
   curr.setDate(curr.getDate());
   var defaultDate = curr.toISOString().substr(0, 10);
 
-  //   const [MedicineName, setMedicineName] = useState<string>("");
-  //   const [CompanyName, setCompanyName] = useState<string>("");
-  //   const [UnitType, setUnitType] = useState<string>("");
   const [selectedMedicineID, setSelectedMedicineID] = useState<number>(0);
   const [addedQuantity, setAddedQuantity] = useState<number>(0);
   const [selectedMedicineName, setSelectedMedicineName] = useState<string>("");
@@ -26,7 +25,7 @@ const AddMedicineQuantitiesToStock = () => {
   const [isHidden, setIsHidden] = useState<boolean>(true);
   const [MedicineDetails, setMedicineDetails] =
     useState<SelectedMedicineDetails>();
-  const [addDate, setAddDate] = useState<Date>(new Date(defaultDate));
+  const [addDate, setAddDate] = useState<string>(new Date(defaultDate).toISOString());
 
   const onLoad = async () => {
     const medList = await FarmServices.GetMedicineList();
@@ -214,7 +213,7 @@ const AddMedicineQuantitiesToStock = () => {
                 float: "right",
               }}
             >
-              {MedicineDetails?.medicineStock.stockCurrentMedicineValue}
+              {MedicineDetails?.medicineStock.stockCurrentMedicineValue} جنيه
             </span>
           </div>
         </div>
@@ -261,7 +260,38 @@ const AddMedicineQuantitiesToStock = () => {
     ) : null;
   }, [MedicineDetails, isHidden]);
 
-  async function onSaveClick() {}
+  async function onSaveClick() {
+    if (!selectedMedicineID) {
+      UINotify.error("يرجي اختيار الدواء");
+    } else if (!addedQuantity) {
+      UINotify.error("يرجي ادخال الكمية");
+    } else {
+      let MedicineStockSaveVM: MedicineStockSaveVM = {
+        ID: 0,
+        MedicineID: selectedMedicineID,
+        StockQuantity: addedQuantity,
+        StockCurrentMedicineValue: 0,
+      };
+
+      const res = await FarmServices.SaveMedicineStock(MedicineStockSaveVM);
+      if (res == "") {
+        Swal.fire({
+          icon: "success",
+          title: "تم الحفظ بنجاح",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        GetMedicineDetails(selectedMedicineID)
+      } else {
+        debugger;
+        Swal.fire({
+          icon: "error",
+          title: "عذرا",
+          text: res,
+        });
+      }
+    }
+  }
 
   return (
     <>
@@ -323,7 +353,7 @@ const AddMedicineQuantitiesToStock = () => {
                   fontSize: "125%",
                 }}
               >
-                لتر
+                {MedicineDetails?.medicineDetails.unit}
               </span>
             </div>
           </div>
@@ -348,7 +378,7 @@ const AddMedicineQuantitiesToStock = () => {
                 placeholder="تاريخ الاضافة..."
                 defaultValue={defaultDate}
                 onChange={(e: any) => {
-                  setAddDate(new Date(e.target.value));
+                  setAddDate(new Date(e.target.value).toISOString());
                 }}
                 dir="rtl"
                 style={{

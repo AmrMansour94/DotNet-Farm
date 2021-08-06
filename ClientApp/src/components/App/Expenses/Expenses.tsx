@@ -13,6 +13,7 @@ const Expenses = () => {
   const [selectedEmpName, setSelectedEmpName] = useState<string>("");
   const [selectedEmpID, setSelectedEmpID] = useState<number>(0);
   const [costValue, setCostValue] = useState<number>(0);
+  const [addDate, setAddDate] = useState<string>(new Date().toISOString());
 
 
   async function onload() {
@@ -166,11 +167,14 @@ const Expenses = () => {
           <div className="row" style={{ margin: "20px" }}>
             <div className="col-md-2"></div>
             <div className="col-md-6">
-              <input
+            <input
                 type="date"
                 className="form-control"
-                placeholder="تاريخ الادخال..."
+                placeholder="تاريخ الصرف..."
                 defaultValue={defaultDate}
+                onChange={(e: any) => {
+                  setAddDate(new Date(e.target.value).toISOString());
+                }}
                 dir="rtl"
                 style={{
                   fontWeight: 900,

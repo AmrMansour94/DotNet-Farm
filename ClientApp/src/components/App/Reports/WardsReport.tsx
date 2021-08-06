@@ -55,21 +55,10 @@ const WardsReport = (props: Iprops) => {
     }
   }, [selectedWard]);
 
-//  function onExporting(e : any) {
-//     const workbook = new ExcelJS.Workbook();
-//     const worksheet = workbook.addWorksheet('Main sheet');
-
-//     function exportDataGrid({
-//       component: e.component,
-//       worksheet: worksheet,
-//       autoFilterEnabled: true
-//     }).then(() => {
-//       workbook.xlsx.writeBuffer().then((buffer) => {
-//         saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'DataGrid.xlsx');
-//       });
-//     });
-//     e.cancel = true;
-//   }
+  const dateCellRender = (e: any) => {
+    const date = new Date(e.data.employmentDate);
+    return date.toISOString().split("T")[0];
+  }; 
 
   const dataGrid = useMemo(() => {
     return dataSource.length>0 ? (
@@ -117,7 +106,7 @@ const WardsReport = (props: Iprops) => {
           <Scrolling columnRenderingMode="virtual" />
           <Column dataField="iD" visible={false} />
           <Column dataField="wardID" visible={false} />
-          <Column dataField="insertionDate" caption="التاريخ" />
+          <Column dataField="insertionDate" caption="التاريخ" cellRender={dateCellRender} />
           <Column dataField="age" caption="العمر" />
           <Column dataField="addedChicksNum" caption="عدد الكتاكيت المضافة " visible={false}/>
           <Column dataField="TotalNumOfChicks" caption="عدد الكتاكيت" />

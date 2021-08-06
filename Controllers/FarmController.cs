@@ -46,16 +46,50 @@ namespace ChicksAppNew.Controllers
         [HttpGet]
         public List<Employee> GetEmployees()
         {
-            var content = _context.Employees.Where(x => x.IsActive == true).ToList();
+            var content = _context.Employees.ToList();
             return content;
+        }
+
+        [HttpPost]
+        public string DeleteEmployee([FromForm] int id)
+        {
+            var content = _context.Employees.Where(x => x.ID == id).FirstOrDefault();
+            var expenses = _context.GeneralExpenses.Where(x => x.EmployeeID == id).ToList();
+            if (content != null)
+            {
+                if(expenses.Count > 0)
+                {
+                _context.Remove(expenses);
+                }
+                _context.Remove(content);
+                _context.SaveChanges();
+                return "";
+            }
+            else return "الموظف غير موجود";
+        }
+
+        [HttpPost]
+        public string StopEmployee([FromForm] int id)
+        {
+            var content = _context.Employees.Where(x => x.ID == id).FirstOrDefault();
+            if (content != null)
+            {
+                content.IsActive = false;
+                _context.SaveChanges();
+                return "";
+            }
+            else return "الموظف غير موجود";
+           
         }
 
 
         [HttpPost]
-        public string SaveEmployee(Employee employee)
+        public string SaveEmployee([FromForm] Employee employee)
         {
             if (string.IsNullOrWhiteSpace(employee.Name.Trim()))
                 return "يرجي ادخال اسم الموظف";
+            if (!(employee.EmploymentDate > DateTime.MinValue))
+                employee.EmploymentDate = DateTime.Now.Date;
 
             var empExist = _context.Employees.Where(x => x.Name.Trim() == employee.Name.Trim() && x.IsActive == true).FirstOrDefault();
             if (empExist != null)
@@ -64,20 +98,8 @@ namespace ChicksAppNew.Controllers
             employee.ID = 0;
             employee.IsActive = true;
             employee.Name = employee.Name.Trim();
+            employee.UnEmploymentDate = null;
             _context.Add(employee);
-            _context.SaveChanges();
-
-            return "";
-        }
-
-        [HttpPost]
-        public string DeleteEmployee(int id)
-        {
-            var empExist = _context.Employees.Where(x => x.ID == id).FirstOrDefault();
-            if (empExist == null)
-                return "هذا الموظف غير موجود";
-
-            empExist.IsActive = false;
             _context.SaveChanges();
 
             return "";
@@ -141,10 +163,10 @@ namespace ChicksAppNew.Controllers
         [HttpPost]
         public string AddMedicineStock([FromForm] MedicineStock Details)
         {
-            if (Details.MedicineID! > 0)
+            if (!(Details.MedicineID > 0))
                 return "يرجي اختيار اسم الدواء";
 
-            if ((Details.StockQuantity! > 0))
+            if (!(Details.StockQuantity > 0))
                 return "يرجي ادخال كمية الدواء";
 
 
@@ -170,15 +192,15 @@ namespace ChicksAppNew.Controllers
         }
 
         [HttpPost]
-        public string AddWardMedicine(WardsMedicineConsumption Details)
+        public string AddWardMedicine([FromForm] WardsMedicineConsumption Details)
         {
-            if (Details.MedicineID! > 0)
+            if (!(Details.MedicineID > 0))
                 return "يرجي اختيار اسم الدواء";
 
-            if (Details.WardID! > 0)
+            if (!(Details.WardID > 0))
                 return "يرجي أختيار اسم العنبر";
 
-            if ((Details.Quantity! > 0))
+            if (!(Details.Quantity > 0))
                 return "يرجي ادخال كمية الدواء";
             if ((Details.ConsumptionDate! > DateTime.MinValue))
                 Details.ConsumptionDate = DateTime.Now.Date;

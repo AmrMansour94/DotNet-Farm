@@ -6,3 +6,12 @@ export interface EmployeesVM {
   phoneNumber: string;
   isActive: boolean;
 }
+
+export interface EmployeesSaveVM {
+  iD: number;
+  name: string;
+  employmentDate: string;
+  unEmploymentDate: string | null;
+  phoneNumber: string;
+  isActive: boolean;
+}
