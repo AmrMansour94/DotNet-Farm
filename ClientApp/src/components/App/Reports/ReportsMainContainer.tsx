@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { IKeyValuePairsVM } from "../../../VM/KeyValuePairs";
 import WardsReport from "./WardsReport";
 
@@ -6,7 +6,7 @@ const ReportsList: IKeyValuePairsVM[] = [
   { ID: 0, Name: "--" },
   { ID: 1, Name: "تقرير العنابر" },
   { ID: 2, Name: "تقرير المخزن" },
-  { ID: 3, Name: "المدفوعات اليومية"},
+  { ID: 3, Name: "المدفوعات اليومية" },
   { ID: 4, Name: "استهلاك الدواء للعنابر" },
   { ID: 5, Name: "الكميات المتبقية من الدواء" },
 ];
@@ -17,12 +17,27 @@ const ReportsMainContainer = () => {
 
   useEffect(() => {}, [selectedReport, isHidden]);
 
+  const reportRender = useMemo(() => {
+    switch (selectedReport) {
+      case 1:
+        return <WardsReport />;
+      case 2:
+        return <WardsReport />;
+      case 3:
+        return <WardsReport />;
+      case 4:
+        return <WardsReport />;
+      case 5:
+        return <WardsReport />;
+    }
+  }, [selectedReport]);
+
   return (
     <div className="card">
       <div className="card-header card-header-text card-header-primary">
         <div className="card-text">
           <h4 className="card-title" style={{ textAlign: "center" }}>
-           التقارير
+            التقارير
           </h4>
         </div>
       </div>
@@ -64,8 +79,12 @@ const ReportsMainContainer = () => {
         </div>
       </div>
 
-      <div className="card-body" hidden={isHidden} style = {{marginTop : "-50px"}}>
-          <WardsReport selectedReport={selectedReport}/>
+      <div
+        className="card-body"
+        hidden={isHidden}
+        style={{ marginTop: "-50px" }}
+      >
+        {reportRender}
       </div>
     </div>
   );

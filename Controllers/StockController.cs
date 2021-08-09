@@ -60,6 +60,9 @@ namespace ChicksAppNew.Controllers
             var result = "";
             try
             {
+                var foodAndWoodUnitCost = _context.FoodAndDustUnitCost.FirstOrDefault();
+                if (foodAndWoodUnitCost == null)
+                    return "يرجي ادخال قيمة الوحدة من العلف والنشارة";
 
                 var currentStock = _context.GeneralStocks.FirstOrDefault();
                 if (currentStock != null)
@@ -70,6 +73,8 @@ namespace ChicksAppNew.Controllers
                     currentStock.CurrentWoodDustQuantity = stock.addedWoodDustQuantity + currentStock.CurrentWoodDustQuantity;
                     currentStock.TotalInitialChicksNum = currentStock.TotalInitialChicksNum + stock.addedChicksNum;
                     currentStock.TotalCurrentChicksNum = currentStock.TotalCurrentChicksNum + stock.addedChicksNum;
+                    currentStock.TotalFoodCost = currentStock.TotalFoodCost + (stock.addedFoodQuantity * foodAndWoodUnitCost.FoodUnitCost);
+                    currentStock.TotalWoodDustCost = currentStock.TotalWoodDustCost + (stock.addedWoodDustQuantity * foodAndWoodUnitCost.WoodDustUnitCost);
                 }
                 else
                 {
@@ -89,17 +94,22 @@ namespace ChicksAppNew.Controllers
                         TotalCurrentChicksNum = stock.addedChicksNum,
                         TotalDeadChicksNum = 0,
                         TotalInitialChicksNum = stock.addedChicksNum,
-                        LastAgeUpdate = DateTime.Now.Date
+                        LastAgeUpdate = DateTime.Now.Date,
+                        TotalFoodCost = stock.addedFoodQuantity * foodAndWoodUnitCost.FoodUnitCost,
+                        TotalWoodDustCost = stock.addedWoodDustQuantity * foodAndWoodUnitCost.WoodDustUnitCost,
                     };
                     _context.Add(newStock);
 
                 }
                 var todayInsertOp = _context.StockInsertionOperations.FirstOrDefault(x => x.InsertDate.Date == DateTime.Now.Date);
+                
                 if (todayInsertOp != null)
                 {
                     todayInsertOp.AddedChicksNum = todayInsertOp.AddedChicksNum + stock.addedChicksNum;
                     todayInsertOp.AddedFoodQuantity = todayInsertOp.AddedFoodQuantity + stock.addedFoodQuantity;
                     todayInsertOp.AddedWoodDustQuantity = todayInsertOp.AddedWoodDustQuantity + stock.addedWoodDustQuantity;
+                    todayInsertOp.AddedFoodTotalCost = todayInsertOp.AddedFoodTotalCost + (stock.addedFoodQuantity * foodAndWoodUnitCost.FoodUnitCost);
+                    todayInsertOp.AddedWoodDustTotalCost = todayInsertOp.AddedWoodDustTotalCost + (stock.addedWoodDustQuantity * foodAndWoodUnitCost.WoodDustUnitCost);
                 }
                 else
                 {
@@ -109,7 +119,9 @@ namespace ChicksAppNew.Controllers
                         AddedChicksNum = stock.addedChicksNum,
                         AddedFoodQuantity = stock.addedFoodQuantity,
                         AddedWoodDustQuantity = stock.addedWoodDustQuantity,
-                        InsertDate = DateTime.Now
+                        InsertDate = DateTime.Now,
+                        AddedWoodDustTotalCost = stock.addedWoodDustQuantity * foodAndWoodUnitCost.WoodDustUnitCost,
+                        AddedFoodTotalCost = stock.addedFoodQuantity * foodAndWoodUnitCost.FoodUnitCost
                     };
                     _context.StockInsertionOperations.Add(stockInsertOperation);
                 }

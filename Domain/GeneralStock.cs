@@ -17,5 +17,8 @@ namespace ChicksApp.Domain
         public int CurrentWoodDustQuantity { get; set; }
         public int AgeInDays { get; set; }
         public DateTime LastAgeUpdate { get; set; }
+        public decimal TotalFoodCost { get; set; }
+        public decimal TotalWoodDustCost { get; set; }
+
     }
 }

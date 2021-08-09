@@ -1,5 +1,6 @@
 import axios from "axios";
 import { IKeyValuePairsVM } from "../VM/KeyValuePairs";
+import { stockReportsVM } from "../VM/StockReportsVM";
 import { SaveNewQuantitiesVM, StockContentVM } from "../VM/StockVM";
 import { getBaseUrl } from "./GetBaseURL";
 
@@ -25,5 +26,10 @@ export const StockApi = {
     //   .then((res) => res.data)
     //   .catch((err) => err.data);
     return req1;
+  },
+
+  GetStockReports: async (): Promise<stockReportsVM> => {
+    const req = await axios.get(getBaseUrl() + "/Stock/GetStockReports");
+    return req.data;
   },
 };

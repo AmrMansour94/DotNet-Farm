@@ -9,5 +9,7 @@ namespace ChicksApp.Domain
         public decimal AddedFoodQuantity { get; set; }
         public decimal AddedWoodDustQuantity { get; set; }
         public DateTime InsertDate { get; set; }
+        public decimal AddedFoodTotalCost { get; set; }
+        public decimal AddedWoodDustTotalCost { get; set; }
     }
 }

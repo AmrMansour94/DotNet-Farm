@@ -43,7 +43,9 @@ namespace ChicksApp.Controllers
             var result = "";
             try
             {
-
+                var foodAndDustUnitValues = _context.FoodAndDustUnitCost.FirstOrDefault();
+                if (foodAndDustUnitValues == null)
+                    return "يرجي ادخال قيمة الوحدة من العلف والنشارة";
                 var currentStock = _context.GeneralStocks.FirstOrDefault();
                 var currentWard = _context.WardsStocks.FirstOrDefault(x => x.WardID == stock.wardID);
                 if (currentStock == null) return "لم يتم تهيئة المخزن اولا";
@@ -88,7 +90,7 @@ namespace ChicksApp.Controllers
                 else currentStock.TotalCurrentChicksNum = 0;
                 _context.SaveChanges();
 
-                var foodAndDustUnitValues = _context.FoodAndDustUnitCost.FirstOrDefault();
+                
                 currentWard = _context.WardsStocks.FirstOrDefault(x => x.WardID == stock.wardID);
                 var todayInsertOp = _context.WardInsertionOperations.FirstOrDefault(x => x.InsertionDate.Date == DateTime.Now.Date && x.WardID == stock.wardID);
                 if (todayInsertOp != null)
