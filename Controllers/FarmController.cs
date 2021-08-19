@@ -223,5 +223,47 @@ namespace ChicksAppNew.Controllers
 
             return "";
         }
+
+
+        [HttpGet]
+        public List<ExpensesReportVM> GetExpensesReport()
+        {
+            var content = _context.GeneralExpenses.Select(x=> new ExpensesReportVM
+            {
+                ID = x.ID,
+                BandName = x.BandName,
+                EmpName = x.Employee.Name,
+                Value = x.Value,
+                ExpenseDate = x.ExpenseDate
+            }).ToList();
+            return content;
+        }
+
+        [HttpPost]
+        public string SaveExpenses([FromForm] GeneralExpenses Details)
+        {
+            if (string.IsNullOrWhiteSpace(Details.BandName))
+                return "يرجي ادخال اسم البند";
+
+            if (!(Details.Value > 0))
+                return "يرجي ادخال قيمة البند بالجنيه";
+
+            if (!(Details.ExpenseDate > DateTime.MinValue))
+                return "يرجي اختيار التاريخ";
+
+            if(Details.EmployeeID > 0)
+            {
+                var empExist = _context.Employees.FirstOrDefault(x => x.ID == Details.EmployeeID);
+                if (empExist == null)
+                    return "هذا الموظف غير موجود";
+            }
+            if (Details.EmployeeID == 0)
+                Details.EmployeeID = null;
+
+            _context.Add(Details);
+            _context.SaveChanges();
+
+            return "";
+        }
     }
 }

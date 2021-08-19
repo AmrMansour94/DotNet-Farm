@@ -50,6 +50,25 @@ namespace ChicksAppNew.Controllers
 
         }
 
+        [HttpGet]
+        public StockReportsVM GetStockReports()
+        {
+            var data = new StockReportsVM
+            {
+                GeneralStock = _context.GeneralStocks.ToList(),
+                InsertionOpsReport = _context.StockInsertionOperations.ToList()
+            };
+            return data;
+        }
+
+        //[HttpGet]
+        //public GeneralStock GetGeneralStockReports()
+        //{
+        //    var data = _context.GeneralStocks.ToList();
+
+        //    return data;
+        //}
+
         [HttpPost]
         public string SaveNewQuantities([FromForm] StockAddNewQuantitiesVM stock)
         {

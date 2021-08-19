@@ -1,5 +1,5 @@
 export interface EmployeesVM {
-  iD: number;
+  id: number;
   name: string;
   employmentDate: Date;
   unEmploymentDate: Date;

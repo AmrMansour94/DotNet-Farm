@@ -1,6 +1,8 @@
 import axios from "axios";
 import { addedMedQuantityTOWardSaveModel } from "../components/App/Medicine/InsertMedicineIntoWards";
 import { EmployeesSaveVM, EmployeesVM } from "../VM/EmployeesVM";
+import { ExpenseSaveVM } from "../VM/ExpenseSaveVM";
+import { ExpensesReportVM } from "../VM/ExpensesReport";
 import {
   MedicineSaveVM,
   MedicineVM,
@@ -125,6 +127,30 @@ export const FarmServices = {
     const req1 = await axios({
       method: "post",
       url: getBaseUrl() + "/Farm/AddWardMedicine",
+      data: data,
+    })
+      .then((res) => res.data)
+      .catch((err) => err.data);
+    return req1;
+  },
+
+  GetExpensesReport: async (): Promise<ExpensesReportVM[]> => {
+    const req = await axios.get(getBaseUrl() + "/Farm/GetExpensesReport");
+    return req.data;
+  },
+
+  SaveExpenses: async (
+    saveVM: ExpenseSaveVM
+  ): Promise<string> => {
+    var data = new FormData();
+    data.append("ID", String(saveVM.ID));
+    data.append("BandName", String(saveVM.BandName));
+    data.append("Value", String(saveVM.Value));
+    data.append("ExpenseDate", String(saveVM.ExpenseDate));
+    data.append("EmployeeID", String(saveVM.EmployeeID));
+    const req1 = await axios({
+      method: "post",
+      url: getBaseUrl() + "/Farm/SaveExpenses",
       data: data,
     })
       .then((res) => res.data)

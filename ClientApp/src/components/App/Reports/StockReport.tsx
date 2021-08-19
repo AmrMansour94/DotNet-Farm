@@ -5,11 +5,13 @@ import FormatSizeIcon from "@material-ui/icons/FormatSize";
 import { stockReportsVM } from "../../../VM/StockReportsVM";
 import { StockApi } from "../../../Services/StockServices";
 
-const StockReport = () => {
+export const StockReport = () => {
   const [stockReports, setStockReports] = useState<stockReportsVM>();
   const [isFullWidth, setIsFullWidth] = useState<boolean>(false);
   const onLoad = async () => {
+    debugger
     const data = await StockApi.GetStockReports();
+    console.log(data)
     setStockReports(data);
   };
 
@@ -19,8 +21,8 @@ const StockReport = () => {
   useEffect(() => {}, [stockReports, isFullWidth]);
 
   const dateCellRender = (e: any) => {
-    if (e.data.insertionDate) {
-      const date = new Date(e.data.insertionDate);
+    if (e.data.insertDate) {
+      const date = new Date(e.data.insertDate);
       return date.toISOString().split("T")[0];
     }
   };
@@ -47,19 +49,19 @@ const StockReport = () => {
               remoteOperations={true}
               showRowLines={true}
               showColumnLines={true}
-              columnWidth={200}
             >
               <Scrolling columnRenderingMode="virtual" />
               <Column dataField="iD" visible={false} />
               <Column
                 dataField="totalInitialChicksNum"
                 caption="اجمالي الكتاكيت"
-                width={140}
+                width={250}
               />
+              <Column dataField="ageInDays" caption="العمر" width={100} />
               <Column
                 dataField="totalDeadChicksNum"
                 caption="اجمالي النوافق"
-                width={80}
+                width={170}
               />
               <Column
                 dataField="totalCurrentChicksNum"
@@ -69,32 +71,28 @@ const StockReport = () => {
               <Column
                 dataField="totalFoodQuantity"
                 caption="اجمالي كمية العلف"
-                width={140}
+                width={230}
               />
               <Column
                 dataField="currentFoodQuantity"
                 caption="كمية العلف المتاحة"
-                width={135}
+                width={230}
               />
               <Column
                 dataField="totalWoodDustQuantity"
                 caption="اجمالي كمية النشارة"
-                width={250}
+                width={230}
               />
               <Column
                 dataField="currentWoodDustQuantity"
                 caption="كمية النشارة المتاحة"
-                width={260}
+                width={230}
               />
-              <Column
-                dataField="ageInDays"
-                caption="العمر"
-                width={140}
-              />
+              
               <Column dataField="totalFoodCost" caption="اجمالي تكلفة العلف" />
               <Column
                 dataField="totalWoodDustCost"
-                caption="اجمالي العلف المستهلك"
+                caption="اجمالي تكلفة النشارة"
                 width={230}
               />
 
@@ -110,37 +108,37 @@ const StockReport = () => {
             >
               <Scrolling columnRenderingMode="virtual" />
               <Column dataField="iD" visible={false} />
-              <Column dataField="wardID" visible={false} />
               <Column
                 dataField="totalInitialChicksNum"
                 caption="اجمالي الكتاكيت"
               />
-              <Column dataField="totalcurrentFoodQuantity" caption="اجمالي كمية العلف" />
+              <Column dataField="ageInDays" caption="العمر" width={100} />
+              <Column
+                dataField="totalDeadChicksNum"
+                caption="اجمالي النوافق"
+              />
               <Column
                 dataField="totalCurrentChicksNum"
                 caption="عدد الكتاكيت الحالي"
                 visible={false}
               />
-              <Column dataField="totalWoodDustCost" caption="عدد الكتاكيت" />
-              <Column dataField="deadChicksNum" caption="عدد النوافق" />
+              <Column
+                dataField="totalFoodQuantity"
+                caption="اجمالي كمية العلف"
+              />
+              <Column
+                dataField="currentFoodQuantity"
+                caption="كمية العلف المتاحة"
+              />
               <Column
                 dataField="totalWoodDustQuantity"
-                caption="العلف المستهلك في اليوم"
+                caption="اجمالي كمية النشارة"
               />
               <Column
                 dataField="currentWoodDustQuantity"
-                caption="النشارة المستهلكة في اليوم"
+                caption="كمية النشارة المتاحة"
               />
-              <Column dataField="ageInDays" caption="نسبة النوافق" />
-              <Column dataField="totalFoodCost" caption="معامل التحويل" />
-              <Column
-                dataField="totalFoodQuantity"
-                caption="اجمالي العلف المستهلك"
-              />
-              <Column
-                dataField="totalWoodDust"
-                caption="اجمالي النشارة المستهلكة"
-              />
+              
               <Column dataField="totalFoodCost" caption="اجمالي تكلفة العلف" />
               <Column
                 dataField="totalWoodDustCost"
@@ -158,7 +156,7 @@ const StockReport = () => {
         >
           <div className="card-text">
             <h4 className="card-title" style={{ textAlign: "center" }}>
-              تقرير المخزن الاساسي
+              عمليات الادخال للمخزن
             </h4>
           </div>
         </div>
@@ -175,51 +173,39 @@ const StockReport = () => {
             >
               <Scrolling columnRenderingMode="virtual" />
               <Column dataField="iD" visible={false} />
-              <Column dataField="wardID" visible={false} />
               <Column
-                dataField="insertionDate"
-                caption="التاريخ"
+                dataField="insertDate"
+                caption="تاريخ الادخال"
                 width={140}
                 cellRender={dateCellRender}
               />
-              <Column dataField="age" caption="العمر" width={80} />
               <Column
-                dataField="totalCurrentChicksNum"
-                caption="عدد الكتاكيت المضافة "
-                visible={false}
+                dataField="addedChicksNum"
+                caption="عدد الكتاكيت المضاف"
+                width={250}
               />
+
               <Column
-                dataField="totalNumOfChicks"
-                caption="عدد الكتاكيت"
-                width={140}
-              />
-              <Column
-                dataField="deadChicksNum"
-                caption="عدد النوافق"
-                width={135}
-              />
-              <Column
-                dataField="consumedFoodQuantityPerDay"
-                caption="العلف المستهلك في اليوم"
+                dataField="addedFoodQuantity"
+                caption="كمية العلف المضافة"
                 width={250}
               />
               <Column
-                dataField="consumedWoodDustQuantityPerDay"
-                caption="النشارة المستهلكة في اليوم"
-                width={260}
+                dataField="addedWoodDustQuantity"
+                caption="كمية النشارة المضافة"
+                width={250}
               />
               <Column
-                dataField="deadRatio"
-                caption="نسبة النوافق"
-                width={140}
+                dataField="addedFoodTotalCost"
+                caption="تكلفة العلف المضاف"
+                width={250}
               />
-              <Column dataField="conversionFactor" caption="معامل التحويل" />
               <Column
-                dataField="totalFoodQuantity"
-                caption="اجمالي العلف المستهلك"
-                width={230}
+                dataField="addedWoodDustTotalCost"
+                caption="تكلفة النشارة المضافة"
+                width={250}
               />
-
+              
               <Export enabled={true} allowExportSelectedData={true} />
             </DataGrid>
           ) : (
@@ -232,44 +218,33 @@ const StockReport = () => {
             >
               <Scrolling columnRenderingMode="virtual" />
               <Column dataField="iD" visible={false} />
-              <Column dataField="wardID" visible={false} />
               <Column
-                dataField="insertionDate"
-                caption="التاريخ"
+                dataField="insertDate"
+                caption="تاريخ الادخال"
                 cellRender={dateCellRender}
               />
-              <Column dataField="age" caption="العمر" />
               <Column
                 dataField="addedChicksNum"
-                caption="عدد الكتاكيت المضافة "
-                visible={false}
-              />
-              <Column dataField="totalNumOfChicks" caption="عدد الكتاكيت" />
-              <Column dataField="deadChicksNum" caption="عدد النوافق" />
-              <Column
-                dataField="consumedFoodQuantityPerDay"
-                caption="العلف المستهلك في اليوم"
-              />
-              <Column
-                dataField="consumedWoodDustQuantityPerDay"
-                caption="النشارة المستهلكة في اليوم"
-              />
-              <Column dataField="deadRatio" caption="نسبة النوافق" />
-              <Column dataField="conversionFactor" caption="معامل التحويل" />
-              <Column
-                dataField="totalFoodQuantity"
-                caption="اجمالي العلف المستهلك"
-              />
-              <Column
-                dataField="totalWoodDust"
-                caption="اجمالي النشارة المستهلكة"
-              />
-              <Column dataField="totalFoodCost" caption="اجمالي تكلفة العلف" />
-              <Column
-                dataField="totalWoodDustCost"
-                caption="اجمالي تكلفة النشارة"
+                caption="عدد الكتاكيت المضاف"
               />
 
+              <Column
+                dataField="addedFoodQuantity"
+                caption="كمية العلف المضافة"
+              />
+              <Column
+                dataField="addedWoodDustQuantity"
+                caption="كمية النشارة المضافة"
+              />
+              <Column
+                dataField="addedFoodTotalCost"
+                caption="تكلفة العلف المضاف"
+              />
+              <Column
+                dataField="addedWoodDustTotalCost"
+                caption="تكلفة النشارة المضافة"
+              />
+              
               <Export enabled={true} allowExportSelectedData={true} />
             </DataGrid>
           )}

@@ -2,6 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import PaymentIcon from "@material-ui/icons/Payment";
 import { FarmServices } from "../../../Services/FarmServices";
 import { EmployeesVM } from "../../../VM/EmployeesVM";
+import { ExpenseSaveVM } from "../../../VM/ExpenseSaveVM";
+import UINotify from "../../UINotify/UINotify";
+import Swal from "sweetalert2";
 
 const Expenses = () => {
   // التاريخ الافتراضي تاريخ اليوم
@@ -11,25 +14,38 @@ const Expenses = () => {
 
   const [EmployeesList, setEmployeesList] = useState<EmployeesVM[]>([]);
   const [selectedEmpName, setSelectedEmpName] = useState<string>("");
+  const [BandName, setBandName] = useState<string>("");
   const [selectedEmpID, setSelectedEmpID] = useState<number>(0);
   const [costValue, setCostValue] = useState<number>(0);
   const [addDate, setAddDate] = useState<string>(new Date().toISOString());
 
   async function onload() {
-    // const data = await FarmServices.GetEmployees();
-    // setEmployeesList(data);
+    const data = await FarmServices.GetEmployees();
+    setEmployeesList(data);
+  }
+
+  function clearState() {
+    setSelectedEmpName("--");
+    setBandName("");
+    setCostValue(0);
   }
 
   useEffect(() => {
     onload();
   }, []);
 
-  useEffect(() => {}, [EmployeesList, selectedEmpID]);
+  useEffect(() => {}, [
+    EmployeesList,
+    selectedEmpID,
+    costValue,
+    addDate,
+    BandName,
+  ]);
   useEffect(() => {
     debugger;
     for (const emp of EmployeesList) {
       if (emp.name == selectedEmpName) {
-        setSelectedEmpID(emp.iD);
+        setSelectedEmpID(emp.id);
         break;
       } else {
         setSelectedEmpID(0);
@@ -37,7 +53,37 @@ const Expenses = () => {
     }
   }, [selectedEmpName]);
 
-  function onSaveClick() {}
+  async function onSaveClick() {
+    let newExpense: ExpenseSaveVM = {
+      ID: 0,
+      BandName: BandName,
+      Value: costValue,
+      ExpenseDate: addDate,
+      EmployeeID: selectedEmpID,
+    };
+    if (!newExpense.BandName) UINotify.error("يرجي ادخال اسم البند");
+    else if (!newExpense.Value) UINotify.error("يرجي ادخال قيمة البند ");
+    else {
+      debugger;
+      if (newExpense.EmployeeID == 0) newExpense.EmployeeID = null;
+
+      const res = await FarmServices.SaveExpenses(newExpense);
+      if (res == "") {
+        Swal.fire({
+          icon: "success",
+          title: "تم الحفظ بنجاح",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        clearState();
+      } else
+        Swal.fire({
+          icon: "error",
+          title: "عذرا",
+          text: res,
+        });
+    }
+  }
 
   const employees = useMemo(() => {
     return (
@@ -57,7 +103,7 @@ const Expenses = () => {
         <option>--</option>
         {EmployeesList.map((emp: EmployeesVM) => {
           return (
-            <option title={emp.name} key={emp.iD} accessKey={String(emp.iD)}>
+            <option title={emp.name} key={emp.id} accessKey={String(emp.id)}>
               {emp.name}
             </option>
           );
@@ -107,6 +153,9 @@ const Expenses = () => {
                 style={{
                   fontWeight: 900,
                   fontSize: "125%",
+                }}
+                onChange={(e: any) => {
+                  setBandName(e.target.value);
                 }}
               />
             </div>
@@ -222,6 +271,7 @@ const Expenses = () => {
               <button
                 className="btn btn-primary btn-round"
                 style={{ alignSelf: "center", width: "100%" }}
+                onClick={onSaveClick}
               >
                 <PaymentIcon />{" "}
                 <label

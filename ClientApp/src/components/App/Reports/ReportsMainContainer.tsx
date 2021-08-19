@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { IKeyValuePairsVM } from "../../../VM/KeyValuePairs";
 import WardsReport from "./WardsReport";
+import StockReport from "./StockReport"
+import ExpenseReport from "./ExpenseReport";
 
 const ReportsList: IKeyValuePairsVM[] = [
   { ID: 0, Name: "--" },
@@ -8,29 +10,42 @@ const ReportsList: IKeyValuePairsVM[] = [
   { ID: 2, Name: "تقرير المخزن" },
   { ID: 3, Name: "المدفوعات اليومية" },
   { ID: 4, Name: "استهلاك الدواء للعنابر" },
-  { ID: 5, Name: "الكميات المتبقية من الدواء" },
+  { ID: 5, Name: "كميات الدواء في المخزن" },
 ];
 
 const ReportsMainContainer = () => {
-  const [selectedReport, setSelectedReport] = useState<number>(0);
+  const [selectedReport, setSelectedReport] = useState<string>();
   const [isHidden, setIsHidden] = useState<boolean>(true);
+  const [selectedReportID, setSelectedReportID] = useState<number>(0);
 
-  useEffect(() => {}, [selectedReport, isHidden]);
+  useEffect(() => {}, [selectedReport, isHidden, selectedReportID]);
+
+  useEffect(() => {
+    debugger;
+    for (const report of ReportsList) {
+      if (report.Name == selectedReport) {
+        setSelectedReportID(report.ID);
+        break;
+      } else {
+        setSelectedReportID(0);
+      }
+    }
+  }, [selectedReport]);
 
   const reportRender = useMemo(() => {
-    switch (selectedReport) {
+    switch (selectedReportID) {
       case 1:
         return <WardsReport />;
       case 2:
-        return <WardsReport />;
+        return <StockReport />;
       case 3:
-        return <WardsReport />;
+        return <ExpenseReport />;
       case 4:
         return <WardsReport />;
       case 5:
         return <WardsReport />;
     }
-  }, [selectedReport]);
+  }, [selectedReportID]);
 
   return (
     <div className="card">
@@ -63,7 +78,10 @@ const ReportsMainContainer = () => {
                 className="form-control selectpicker"
                 data-style="btn btn-link"
                 id="exampleFormControlSelect1"
-                onChange={() => setIsHidden(false)}
+                onChange={(e:any) => {
+                  setIsHidden(false);
+                  setSelectedReport(e.target.value);
+                }}
                 style={{
                   fontWeight: 900,
                   fontSize: "125%",

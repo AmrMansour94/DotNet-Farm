@@ -18,11 +18,11 @@ export interface GeneralStock {
 }
 
 export interface InsertionOpsReport {
-  ID: number;
-  AddedChicksNum: number;
-  AddedFoodQuantity: number;
-  AddedWoodDustQuantity: number;
-  InsertDate: Date;
-  AddedFoodTotalCost: number;
-  AddedWoodDustTotalCost: number;
+  iD: number;
+  addedChicksNum: number;
+  addedFoodQuantity: number;
+  addedWoodDustQuantity: number;
+  insertDate: Date;
+  addedFoodTotalCost: number;
+  addedWoodDustTotalCost: number;
 }
