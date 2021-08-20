@@ -308,13 +308,19 @@ namespace ChicksAppNew.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("ConsumedQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CurrentStockQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("InitialStockQuantity")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("MedicineID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("StockCurrentMedicineValue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("StockQuantity")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ID");

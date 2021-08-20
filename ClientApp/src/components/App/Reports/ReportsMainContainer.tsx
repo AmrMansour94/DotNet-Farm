@@ -3,6 +3,8 @@ import { IKeyValuePairsVM } from "../../../VM/KeyValuePairs";
 import WardsReport from "./WardsReport";
 import StockReport from "./StockReport"
 import ExpenseReport from "./ExpenseReport";
+import MedicineStockReport from "./MedicineStockReport";
+import WardsMedicineReport from "./WardsMedicineReport";
 
 const ReportsList: IKeyValuePairsVM[] = [
   { ID: 0, Name: "--" },
@@ -41,9 +43,9 @@ const ReportsMainContainer = () => {
       case 3:
         return <ExpenseReport />;
       case 4:
-        return <WardsReport />;
+        return <WardsMedicineReport />;
       case 5:
-        return <WardsReport />;
+        return <MedicineStockReport />;
     }
   }, [selectedReportID]);
 

@@ -151,8 +151,10 @@ namespace ChicksAppNew.Controllers
             {
                 ID = 0,
                 MedicineID = Details.ID,
-                StockQuantity = 0,
-                StockCurrentMedicineValue = 0
+                InitialStockQuantity = 0,
+                CurrentStockQuantity = 0,
+                StockCurrentMedicineValue = 0,
+                ConsumedQuantity = 0
             };
             _context.Add(medStock);
             _context.SaveChanges();
@@ -166,22 +168,22 @@ namespace ChicksAppNew.Controllers
             if (!(Details.MedicineID > 0))
                 return "يرجي اختيار اسم الدواء";
 
-            if (!(Details.StockQuantity > 0))
+            if (!(Details.CurrentStockQuantity > 0))
                 return "يرجي ادخال كمية الدواء";
 
 
             var medicine = _context.MedicineDetails.Where(x => x.ID == Details.MedicineID).FirstOrDefault();
             if (medicine == null) return "هذا الدواء غير موجود";
 
-            Details.StockCurrentMedicineValue = Details.StockQuantity * medicine.UnitCost;
+            Details.StockCurrentMedicineValue = Details.CurrentStockQuantity * medicine.UnitCost;
 
             var medicineStock = _context.MedicineStock.Where(x => x.MedicineID == Details.MedicineID).FirstOrDefault();
 
             if (medicineStock == null)
                 return "هذا الدواء غير موجود بالمخزن";
 
-
-            medicineStock.StockQuantity += Details.StockQuantity;
+            medicineStock.InitialStockQuantity += Details.CurrentStockQuantity;
+            medicineStock.CurrentStockQuantity += Details.CurrentStockQuantity;
             medicineStock.StockCurrentMedicineValue += Details.StockCurrentMedicineValue;
 
 
@@ -209,14 +211,15 @@ namespace ChicksAppNew.Controllers
             if (medicine == null) return "هذا الدواء غير موجود";
 
             var medicineStock = _context.MedicineStock.Where(x => x.MedicineID == Details.MedicineID).FirstOrDefault();
-            if (Details.Quantity > medicineStock.StockQuantity)
+            if (Details.Quantity > medicineStock.CurrentStockQuantity)
                 return "الكمية المدخلة اكبر من الكمية المتاحة بالمخزن";
 
             Details.ID = 0;
             Details.TotalCost = Details.Quantity * medicine.UnitCost;
 
             _context.Add(Details);
-            medicineStock.StockQuantity -= Details.Quantity;
+            medicineStock.CurrentStockQuantity -= Details.Quantity;
+            medicineStock.ConsumedQuantity += Details.Quantity;
             medicineStock.StockCurrentMedicineValue -= Details.TotalCost;
 
             _context.SaveChanges();
@@ -264,6 +267,55 @@ namespace ChicksAppNew.Controllers
             _context.SaveChanges();
 
             return "";
+        }
+
+        [HttpGet]
+        public List<MedicineStockReportVM> GetMedicineStockReport()
+        {
+            var content = _context.MedicineStock.Select(x => new MedicineStockReportVM
+            {
+                ID = x.ID,
+                MedicineID = x.MedicineID,
+                InitialStockQuantity = x.InitialStockQuantity,
+                ConsumedQuantity = x.ConsumedQuantity,
+                CurrentStockQuantity = x.CurrentStockQuantity,
+                StockCurrentMedicineValue = x.StockCurrentMedicineValue,
+                MedicineName = x.MedicineDetails.Name,
+                UnitCost = x.MedicineDetails.UnitCost,
+                Unit = x.MedicineDetails.Unit
+            }).ToList();
+            return content;
+        }
+
+        [HttpGet]
+        public List<WardsMedicineReportVM> WardsMedicineReport(int? wardID)
+        {
+            var content = new List<WardsMedicineReportVM>();
+            if (wardID > 0)
+            {
+                content = _context.WardsMedicineConsumptions.Where(x => x.WardID == wardID).Select(x => new WardsMedicineReportVM
+                {
+                    ID = x.ID,
+                    WardName = x.Ward.Name,
+                    Quantity = x.Quantity,
+                    ConsumptionDate = x.ConsumptionDate,
+                    TotalCost = x.TotalCost,
+                    MedicineName = x.MedicineDetails.Name,
+                }).ToList();
+            }
+            else
+            {
+                content = _context.WardsMedicineConsumptions.Select(x => new WardsMedicineReportVM
+                {
+                    ID = x.ID,
+                    WardName = x.Ward.Name,
+                    Quantity = x.Quantity,
+                    ConsumptionDate = x.ConsumptionDate,
+                    TotalCost = x.TotalCost,
+                    MedicineName = x.MedicineDetails.Name,
+                }).ToList();
+            }
+            return content;
         }
     }
 }

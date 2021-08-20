@@ -8,7 +8,9 @@ import Swal from "sweetalert2";
 export interface MedicineStockSaveVM {
   ID: number;
   MedicineID: number;
-  StockQuantity: number;
+  InitialStockQuantity: number;
+  CurrentStockQuantity: number;
+  ConsumedQuantity: number;
   StockCurrentMedicineValue: number;
 }
 
@@ -269,7 +271,9 @@ const AddMedicineQuantitiesToStock = () => {
       let MedicineStockSaveVM: MedicineStockSaveVM = {
         ID: 0,
         MedicineID: selectedMedicineID,
-        StockQuantity: addedQuantity,
+        CurrentStockQuantity: addedQuantity,
+        ConsumedQuantity : 0,
+        InitialStockQuantity: 0,
         StockCurrentMedicineValue: 0,
       };
 

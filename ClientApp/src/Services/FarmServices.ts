@@ -3,12 +3,14 @@ import { addedMedQuantityTOWardSaveModel } from "../components/App/Medicine/Inse
 import { EmployeesSaveVM, EmployeesVM } from "../VM/EmployeesVM";
 import { ExpenseSaveVM } from "../VM/ExpenseSaveVM";
 import { ExpensesReportVM } from "../VM/ExpensesReport";
+import { MedicineStockReportVM } from "../VM/MedicineReportsVMs";
 import {
   MedicineSaveVM,
   MedicineVM,
   SelectedMedicineDetails,
   MedicineStockSaveVM,
 } from "../VM/MedicineVM";
+import { WardMedicineReportVM } from "../VM/WardMedicineReportVM";
 import { getBaseUrl } from "./GetBaseURL";
 
 export const FarmServices = {
@@ -74,6 +76,20 @@ export const FarmServices = {
     return req.data;
   },
 
+  GetMedicineStockReport: async (): Promise<MedicineStockReportVM[]> => {
+    const req = await axios.get(
+      getBaseUrl() + "/Farm/GetMedicineStockReport"
+    );
+    return req.data;
+  },
+
+  GetWardsMedicineReport: async (ID: number): Promise<WardMedicineReportVM[]> => {
+    const req = await axios.get(
+      getBaseUrl() + "/Farm/WardsMedicineReport?wardID=" + ID
+    );
+    return req.data;
+  },
+
   SaveNewMedicine: async (medicine: MedicineSaveVM): Promise<string> => {
     var data = new FormData();
     data.append("ID", String(medicine.ID));
@@ -99,7 +115,9 @@ export const FarmServices = {
     var data = new FormData();
     data.append("ID", String(MedicineStockSaveVM.ID));
     data.append("MedicineID", String(MedicineStockSaveVM.MedicineID));
-    data.append("StockQuantity", String(MedicineStockSaveVM.StockQuantity));
+    data.append("InitialStockQuantity", String(MedicineStockSaveVM.InitialStockQuantity));
+    data.append("CurrentStockQuantity", String(MedicineStockSaveVM.CurrentStockQuantity));
+    data.append("ConsumedQuantity", String(MedicineStockSaveVM.ConsumedQuantity));
     data.append(
       "StockCurrentMedicineValue",
       String(MedicineStockSaveVM.StockCurrentMedicineValue)

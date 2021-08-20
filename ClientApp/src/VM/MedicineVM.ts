@@ -30,7 +30,9 @@ export interface MedicineStock {
 export interface MedicineStockSaveVM {
   ID: number;
   MedicineID: number;
-  StockQuantity: number;
+  InitialStockQuantity: number;
+  CurrentStockQuantity: number;
+  ConsumedQuantity: number;
   StockCurrentMedicineValue: number;
 }
 
