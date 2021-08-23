@@ -7,6 +7,7 @@ import TocOutlinedIcon from "@material-ui/icons/TocOutlined";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import AssessmentOutlinedIcon from "@material-ui/icons/AssessmentOutlined";
 import AttachMoneyOutlinedIcon from "@material-ui/icons/AttachMoneyOutlined";
+import SettingsIcon from '@material-ui/icons/Settings';
 import Box from "@material-ui/core/Box";
 import { IKeyValuePairsVM } from "../../VM/KeyValuePairs";
 import { WardsApi } from "../../Services/WardsServices";
@@ -18,6 +19,7 @@ import ReportsMainContainer from "../App/Reports/ReportsMainContainer";
 import MedicineMainContainer from "../App/Medicine/MedicineMainContainer";
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import EmployeesContainer from "../App/Employees/EmployeesContainer";
+import Settings from "../App/Settings";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -97,42 +99,49 @@ export default function TabBar() {
             aria-label="phone"
             {...a11yProps(0)}
             label="تهيئة المخزن"
-            style={{ width: 180 }}
+            style={{ width: 155 }}
           />
           <Tab
             icon={<TocOutlinedIcon />}
             aria-label="favorite"
             {...a11yProps(1)}
             label="تهيئة العنابر"
-            style={{ width: 180 }}
+            style={{ width: 155 }}
           />
           <Tab
             icon={<AttachMoneyOutlinedIcon />}
             aria-label="person"
             {...a11yProps(2)}
             label="مصروفات اضافية"
-            style={{ width: 180 }}
+            style={{ width: 155 }}
           />
           <Tab
             icon={<LocalHospitalIcon />}
             aria-label="help"
             {...a11yProps(3)}
             label="تهيئة الدواء"
-            style={{ width: 180 }}
+            style={{ width: 155 }}
           />
           <Tab
             icon={<AssignmentIndIcon />}
             aria-label="help"
             {...a11yProps(4)}
             label="تهيئة الموظفين"
-            style={{ width: 180 }}
+            style={{ width: 155 }}
           />
           <Tab
             icon={<AssessmentOutlinedIcon />}
             aria-label="help"
             {...a11yProps(5)}
             label="التقارير"
-            style={{ width: 180 }}
+            style={{ width: 155 }}
+          />
+          <Tab
+            icon={<SettingsIcon />}
+            aria-label="help"
+            {...a11yProps(6)}
+            label="الاعدادات"
+            style={{ width: 154 }}
           />
         </Tabs>
       </AppBar>
@@ -153,6 +162,9 @@ export default function TabBar() {
       </TabPanel>
       <TabPanel value={value} index={5}>
         <ReportsMainContainer />
+      </TabPanel>
+      <TabPanel value={value} index={6}>
+        <Settings />
       </TabPanel>
     </div>
   );

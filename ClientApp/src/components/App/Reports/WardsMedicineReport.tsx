@@ -1,11 +1,9 @@
 import { DataGrid } from "devextreme-react";
 import { Scrolling, Column, Export } from "devextreme-react/data-grid";
 import React, { useEffect, useMemo, useState } from "react";
-import Swal from "sweetalert2";
 import { WardsApi } from "../../../Services/WardsServices";
 import { IKeyValuePairsVM } from "../../../VM/KeyValuePairs";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
-import Button from 'devextreme-react/button';
 import { WardMedicineReportVM } from "../../../VM/WardMedicineReportVM";
 import { FarmServices } from "../../../Services/FarmServices";
 

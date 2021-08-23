@@ -14,6 +14,17 @@ import { WardMedicineReportVM } from "../VM/WardMedicineReportVM";
 import { getBaseUrl } from "./GetBaseURL";
 
 export const FarmServices = {
+  ResetFarmCycle: async (): Promise<string> => {
+    const req1 = await axios({
+      method: "post",
+      url: getBaseUrl() + "/Farm/ResetFarmCycle"
+    })
+      .then((res) => res.data)
+      .catch((err) => err.data);
+    return req1;
+  },
+
+
   GetEmployees: async (): Promise<EmployeesVM[]> => {
     const req = await axios.get(getBaseUrl() + "/Farm/GetEmployees");
     return req.data;

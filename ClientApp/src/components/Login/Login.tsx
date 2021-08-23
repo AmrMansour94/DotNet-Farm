@@ -37,6 +37,8 @@ const Login = () => {
   useEffect(() => {}, [userName, password]);
   useEffect(() => {
     if (User) {
+      localStorage.userName = User.UserName
+      localStorage.ID = User.ID
       history.push("/");
     }
   }, [User]);

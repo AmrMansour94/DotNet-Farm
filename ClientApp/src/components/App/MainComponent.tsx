@@ -21,7 +21,7 @@ const MainComponent = () => {
   useEffect(() => {
     debugger;
     if (!User) {
-      window.location.href = "/Login";
+      //window.location.href = "/Login";
     }
   }, []);
   if (User) {

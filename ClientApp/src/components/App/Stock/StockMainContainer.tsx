@@ -17,7 +17,9 @@ const StockMainContainer = () => {
 
   const onLoad = async () => {
     if (!User) {
-      window.location.href = "/Login";
+      //window.location.href = "/Login";
+      console.log(localStorage.userName)
+      console.log(localStorage.ID)
     }
   };
   useEffect(() => {
