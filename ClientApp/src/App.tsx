@@ -1,7 +1,12 @@
 import React, { Suspense, useEffect, useState } from "react";
-import 'devextreme/dist/css/dx.material.purple.light.css';
+import "devextreme/dist/css/dx.material.purple.light.css";
 import "./custom.css";
-import { BrowserRouter as Router , Switch, Route} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Login from "./components/Login/Login";
 import MainComponent from "./components/App/MainComponent";
 import axios from "axios";
@@ -12,7 +17,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {}, [isLoading]);
- 
+
   axios.interceptors.request.use(
     function (config) {
       // spinning start to show
@@ -31,12 +36,12 @@ const App = () => {
       return error;
     }
   );
-  
+
   axios.interceptors.response.use(
     function (response) {
       // spinning hide
       setIsLoading(false);
-  
+
       return response;
     },
     function (error) {
@@ -51,28 +56,30 @@ const App = () => {
       return error;
     }
   );
-  useEffect(() => {
-   
-  }, []);
+  useEffect(() => {}, []);
 
-    return (<div>
+  return (
+    <div>
       {isLoading ? <FullPageLoader /> : null}
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Suspense fallback={<div>Loading</div>}>
-            <MainComponent />
-          </Suspense>
-        </Route>
-        <Route path="/Login">
-          <Suspense fallback={<div>Loading</div>}>
-            <Login />
-          </Suspense>
-        </Route>
-      </Switch>
-    </Router>
-    </div>);
-  }
-
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route path="/Home">
+            <Suspense fallback={<div>Loading</div>}>
+              <MainComponent />
+            </Suspense>
+          </Route>
+          <Route path="/Login">
+            <Suspense fallback={<div>Loading</div>}>
+              <Login />
+            </Suspense>
+          </Route>
+        </Switch>
+      </Router>
+    </div>
+  );
+};
 
 export default App;

@@ -37,9 +37,10 @@ const Login = () => {
   useEffect(() => {}, [userName, password]);
   useEffect(() => {
     if (User) {
-      localStorage.userName = User.UserName
+      window.sessionStorage.setItem('UserName' , User.UserName)  
+      window.sessionStorage.setItem('ID' , User.ID.toString()) 
       localStorage.ID = User.ID
-      history.push("/");
+      history.push("/Home");
     }
   }, [User]);
 

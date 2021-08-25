@@ -7,19 +7,18 @@ import StockContent from "./StockContent";
 import StockOperations from "./StockOperations";
 
 const StockMainContainer = () => {
-  const { User } = useSelector<storeState, LoginInitialState>(
-    (state: storeState) => {
-      return {
-        User: state.Login.User,
-      };
-    }
-  );
+  // const { User } = useSelector<storeState, LoginInitialState>(
+  //   (state: storeState) => {
+  //     return {
+  //       User: state.Login.User,
+  //     };
+  //   }
+  // );
 
   const onLoad = async () => {
-    if (!User) {
-      //window.location.href = "/Login";
-      console.log(localStorage.userName)
-      console.log(localStorage.ID)
+    var userName = window.sessionStorage.getItem("UserName")
+    if (!userName) {
+      window.location.href = "/Login";
     }
   };
   useEffect(() => {

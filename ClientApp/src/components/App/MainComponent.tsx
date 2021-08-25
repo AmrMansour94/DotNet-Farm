@@ -8,23 +8,24 @@ import { storeState } from "../..";
 
 
 const MainComponent = () => {
-  const { User } = useSelector<storeState, LoginInitialState>(
-    (state: storeState) => {
-      return {
-        User: state.Login.User,
-      };
-    }
-  );
-  const dispatch = useDispatch();
-  const rootDispatcher = new LoginDispatcher(dispatch);
+  // const { User } = useSelector<storeState, LoginInitialState>(
+  //   (state: storeState) => {
+  //     return {
+  //       User: state.Login.User,
+  //     };
+  //   }
+  // );
+  // const dispatch = useDispatch();
+  // const rootDispatcher = new LoginDispatcher(dispatch);
 
   useEffect(() => {
     debugger;
-    if (!User) {
-      //window.location.href = "/Login";
+    var userName = window.sessionStorage.getItem("UserName")
+    if (!userName) {
+      window.location.href = "/Login";
     }
   }, []);
-  if (User) {
+  // if (User) {
     return (
       <div>
         <LoginNavbar />
@@ -36,7 +37,7 @@ const MainComponent = () => {
        
       </div>
     );
-  } else return <></>;
+  // } else return <></>;
 };
 
 export default MainComponent;

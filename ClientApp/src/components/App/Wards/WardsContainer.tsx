@@ -25,7 +25,8 @@ const WardsContainer = () => {
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
   const onLoad = async () => {
-    if (!User) {
+    var userName = window.sessionStorage.getItem("UserName")
+    if (!userName) {
       window.location.href = "/Login";
     }
     const data = await WardsApi.getWardsList();

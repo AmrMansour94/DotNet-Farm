@@ -10,16 +10,17 @@ import InsertMedicineIntoWards from "./InsertMedicineIntoWards";
 
 const MedicineMainContainer = () => {
 
-  const { User } = useSelector<storeState, LoginInitialState>(
-    (state: storeState) => {
-      return {
-        User: state.Login.User,
-      };
-    }
-  );
+  // const { User } = useSelector<storeState, LoginInitialState>(
+  //   (state: storeState) => {
+  //     return {
+  //       User: state.Login.User,
+  //     };
+  //   }
+  // );
 
   const onLoad = async () => {
-    if (!User) {
+    var userName = window.sessionStorage.getItem("UserName")
+    if (!userName) {
       window.location.href = "/Login";
     }
   };
