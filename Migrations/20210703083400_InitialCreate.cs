@@ -55,6 +55,12 @@ namespace ChicksAppNew.Migrations
                     table.PrimaryKey("PK_Wards", x => x.ID);
                 });
 
+            migrationBuilder.Sql(@"INSERT INTO [dbo].[Wards]
+           ([Name])
+     VALUES
+           (N'عنبر 1') , (N'عنبر 2') , (N'عنبر 3') , (N'عنبر 4') , (N'عنبر 5')
+GO");
+
             migrationBuilder.CreateTable(
                 name: "WardInsertionOperations",
                 columns: table => new
