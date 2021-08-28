@@ -50,6 +50,13 @@ namespace ChicksAppNew.Controllers
             return content;
         }
 
+        [HttpGet]
+        public FoodAndDustUnitCost GetUnitPrices()
+        {
+            var content = _context.FoodAndDustUnitCost.FirstOrDefault();
+            return content;
+        }
+
         [HttpPost]
         public string DeleteEmployee([FromForm] int id)
         {
@@ -57,9 +64,9 @@ namespace ChicksAppNew.Controllers
             var expenses = _context.GeneralExpenses.Where(x => x.EmployeeID == id).ToList();
             if (content != null)
             {
-                if(expenses.Count > 0)
+                if (expenses.Count > 0)
                 {
-                _context.Remove(expenses);
+                    _context.Remove(expenses);
                 }
                 _context.Remove(content);
                 _context.SaveChanges();
@@ -79,7 +86,30 @@ namespace ChicksAppNew.Controllers
                 return "";
             }
             else return "الموظف غير موجود";
-           
+
+        }
+
+        [HttpPost]
+        public string AddOrEditFoodAndDustPrices([FromForm] FoodAndDustUnitCost prices)
+        {
+            var content = _context.FoodAndDustUnitCost.FirstOrDefault();
+            if (content == null)
+            {
+                if (prices.FoodUnitCost == 0)
+                    return "يرجي ادخال سعر العلف";
+                if (prices.WoodDustUnitCost == 0)
+                    return "يرجي ادخال سعر العلف";
+                prices.ID = 0;
+                _context.Add(prices);
+
+            }
+            else
+            {
+                content.FoodUnitCost = prices.FoodUnitCost;
+                content.WoodDustUnitCost = prices.WoodDustUnitCost;
+            };
+            _context.SaveChanges();
+            return "";
         }
 
 
@@ -231,7 +261,7 @@ namespace ChicksAppNew.Controllers
         [HttpGet]
         public List<ExpensesReportVM> GetExpensesReport()
         {
-            var content = _context.GeneralExpenses.Select(x=> new ExpensesReportVM
+            var content = _context.GeneralExpenses.Select(x => new ExpensesReportVM
             {
                 ID = x.ID,
                 BandName = x.BandName,
@@ -254,7 +284,7 @@ namespace ChicksAppNew.Controllers
             if (!(Details.ExpenseDate > DateTime.MinValue))
                 return "يرجي اختيار التاريخ";
 
-            if(Details.EmployeeID > 0)
+            if (Details.EmployeeID > 0)
             {
                 var empExist = _context.Employees.FirstOrDefault(x => x.ID == Details.EmployeeID);
                 if (empExist == null)

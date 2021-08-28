@@ -19,7 +19,7 @@ import ReportsMainContainer from "../App/Reports/ReportsMainContainer";
 import MedicineMainContainer from "../App/Medicine/MedicineMainContainer";
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import EmployeesContainer from "../App/Employees/EmployeesContainer";
-import Settings from "../App/Settings";
+import Settings from "../App/Config/Settings";
 
 interface TabPanelProps {
   children?: React.ReactNode;

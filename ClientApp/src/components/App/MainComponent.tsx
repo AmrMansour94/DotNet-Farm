@@ -27,7 +27,7 @@ const MainComponent = () => {
   }, []);
   // if (User) {
     return (
-      <div>
+      window.sessionStorage.getItem("UserName") ? <div>
         <LoginNavbar />
         <div style={{display:"block"}}>
            <Layout>
@@ -35,7 +35,7 @@ const MainComponent = () => {
         </Layout>
         </div>
        
-      </div>
+      </div> : null
     );
   // } else return <></>;
 };

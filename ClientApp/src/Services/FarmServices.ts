@@ -10,6 +10,7 @@ import {
   SelectedMedicineDetails,
   MedicineStockSaveVM,
 } from "../VM/MedicineVM";
+import { PricesSaveVM } from "../VM/PricesSaveVM";
 import { WardMedicineReportVM } from "../VM/WardMedicineReportVM";
 import { getBaseUrl } from "./GetBaseURL";
 
@@ -28,6 +29,27 @@ export const FarmServices = {
   GetEmployees: async (): Promise<EmployeesVM[]> => {
     const req = await axios.get(getBaseUrl() + "/Farm/GetEmployees");
     return req.data;
+  },
+
+  GetPrices: async (): Promise<PricesSaveVM> => {
+    const req = await axios.get(getBaseUrl() + "/Farm/GetUnitPrices");
+    return req.data;
+  },
+
+  SavePrices: async (prices: PricesSaveVM): Promise<string> => {
+    var data = new FormData();
+    data.append("ID", String(prices.ID));
+    data.append("FoodUnitCost", String(prices.FoodUnitCost));
+    data.append("WoodDustUnitCost", String(prices.WoodDustUnitCost));
+
+    const req1 = await axios({
+      method: "post",
+      url: getBaseUrl() + "/Farm/AddOrEditFoodAndDustPrices",
+      data: data,
+    })
+      .then((res) => res.data)
+      .catch((err) => err.data);
+    return req1;
   },
 
   AddNewEmployee: async (emp: EmployeesSaveVM): Promise<string> => {
