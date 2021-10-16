@@ -190,7 +190,7 @@ const AddMedicineQuantitiesToStock = () => {
                 float: "right",
               }}
             >
-              {MedicineDetails?.medicineStock.stockQuantity}{" "}
+              {MedicineDetails?.medicineStock.currentStockQuantity}{" "}
               {MedicineDetails?.medicineDetails.unit}
             </span>
           </div>

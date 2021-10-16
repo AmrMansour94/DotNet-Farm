@@ -215,7 +215,7 @@ const InsertMedicineIntoWards = () => {
                 float: "right",
               }}
             >
-              {MedicineDetails?.medicineStock.stockQuantity}{" "}
+              {MedicineDetails?.medicineStock.currentStockQuantity}{" "}
               {MedicineDetails?.medicineDetails.unit}
             </span>
           </div>
@@ -322,7 +322,7 @@ const InsertMedicineIntoWards = () => {
       UINotify.error("يرجي ادخال الكمية المضافة");
     } else if (
       MedicineDetails &&
-      addedQuantity > MedicineDetails?.medicineStock.stockQuantity
+      addedQuantity > MedicineDetails?.medicineStock.currentStockQuantity
     ) {
       UINotify.error("الكمية المضافة اكبر من الكمية المتاحة حاليا في المخزن");
     } else {

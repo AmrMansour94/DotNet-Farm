@@ -23,7 +23,9 @@ export interface SelectedMedicineDetails {
 export interface MedicineStock {
   id: number;
   medicineID: number;
-  stockQuantity: number;
+  initialStockQuantity: number;
+  currentStockQuantity: number;
+  consumedQuantity: number;
   stockCurrentMedicineValue: number;
 }
 
