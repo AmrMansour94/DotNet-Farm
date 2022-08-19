@@ -47,7 +47,7 @@ namespace ChicksAppNew
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "wwwroot/build";
             });
 
             // Adjust Json Return Values To Use Same Format As ViewModels
